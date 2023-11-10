@@ -2,6 +2,9 @@ package christmas.controller;
 
 import christmas.service.ChristmasPromotionService;
 
+import java.util.AbstractMap;
+import java.util.List;
+
 public class ChristmasPromotionController {
 
     private final ChristmasPromotionService service;
@@ -12,5 +15,9 @@ public class ChristmasPromotionController {
 
     public void setVisitDate(Integer readVisitDate) {
         service.createVisitDate(readVisitDate);
+    }
+
+    public void setOrder(List<AbstractMap.SimpleEntry<String, Integer>> readOrder) {
+        service.createOrder(readOrder);
     }
 }
