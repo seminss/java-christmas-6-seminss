@@ -33,4 +33,8 @@ public class ChristmasPromotionService {
     public int getInitialOrderAmount() {
         return initialOrderAmount.amount();
     }
+
+    public boolean checkEventQualification(){
+        return initialOrderAmount.amount() > 10000;
+    }
 }
