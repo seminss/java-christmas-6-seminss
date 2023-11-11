@@ -20,4 +20,5 @@ public class ChristmasPromotionController {
     public void setOrder(List<AbstractMap.SimpleEntry<String, Integer>> readOrder) {
         service.createOrder(readOrder);
     }
+
 }
