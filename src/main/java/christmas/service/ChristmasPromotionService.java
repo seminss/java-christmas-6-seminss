@@ -1,14 +1,34 @@
 package christmas.service;
 
 import christmas.model.*;
+import christmas.model.calendar.ChristmasEventCalendar;
+import christmas.model.calendar.EventCalendar;
+import christmas.model.discount.ChristmasDiscountPolicy;
+import christmas.model.discount.DiscountPolicy;
+import christmas.model.valueObject.InitialOrderAmount;
+import christmas.model.valueObject.VisitDate;
 
+import java.time.LocalDate;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class ChristmasPromotionService {
     private VisitDate visitDate;
     private Order order;
     private InitialOrderAmount initialOrderAmount;
+    private final DiscountPolicy discountPolicy = new ChristmasDiscountPolicy();
+    private final EventCalendar eventCalendar = new ChristmasEventCalendar(
+            new HashSet<>(Arrays.asList(
+                    LocalDate.of(2023, 12, 3),
+                    LocalDate.of(2023, 12, 10),
+                    LocalDate.of(2023, 12, 17),
+                    LocalDate.of(2023, 12, 24),
+                    LocalDate.of(2023, 12, 25),
+                    LocalDate.of(2023, 12, 31) //TODO: 규칙으로 초기화 하기
+            ))
+    );
     private final Menu giveawayMenu = Menu.CHAMPAGNE;
 
     public void createVisitDate(Integer readVisitDate) {
@@ -37,8 +57,25 @@ public class ChristmasPromotionService {
     }
 
     public boolean checkGiveawayEventQualification() { // TODO : 얘도 상태 정보로 저장 해야 할까??
-        boolean dateCondition = visitDate.date() >= 1 && visitDate.date() <= 31;
         boolean amountCondition = initialOrderAmount.amount() > giveawayMenu.getPrice();
-        return dateCondition && amountCondition;
+        return amountCondition;
+    }
+
+    public void discount() {
+        int discountPrice = 0;
+        if (eventCalendar.isDDayDiscountDay(visitDate.getDate())) {
+            discountPrice += discountPolicy.getDDayDiscountPrice(visitDate.getDate().getDayOfMonth());
+        }
+//        if (eventCalendar.isWeekday(visitDate.getDate())) {
+//            int dessertQuantity = order.getOrder().getDessertQuantity();
+//            discountPrice += discountPolicy.getWeekdayDiscountPrice(dessertQuantity);
+//        }
+//        if (eventCalendar.isWeekend(visitDate.getDate())) {
+//            int mainQuantity = order.getOrder().getMainQuantity();
+//            discountPrice += discountPolicy.getWeekendDiscountPrice(mainQuantity);
+//        }
+//        if (eventCalendar.isSpecialDiscountDay(visitDate.getDate())) {
+//            discountPrice += discountPolicy.getSpecialDiscountPrice();
+//        }
     }
 }
