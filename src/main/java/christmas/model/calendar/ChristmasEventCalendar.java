@@ -12,13 +12,13 @@ public class ChristmasEventCalendar extends EventCalendar {
     @Override
     public boolean isWeekday(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
-        return day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
+        return day != DayOfWeek.SATURDAY && day != DayOfWeek.FRIDAY;
     }
 
     @Override
     public boolean isWeekend(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
-        return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
+        return day == DayOfWeek.SATURDAY || day == DayOfWeek.FRIDAY;
     }
 
     @Override
