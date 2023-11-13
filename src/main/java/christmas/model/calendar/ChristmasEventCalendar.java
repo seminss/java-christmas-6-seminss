@@ -3,17 +3,11 @@ package christmas.model.calendar;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Set;
 
 public class ChristmasEventCalendar extends EventCalendar {
 
     private final LocalDate christmasDay = LocalDate.of(2023, Month.DECEMBER, 25);
-
-    private final Set<LocalDate> specialDiscountDays;
-
-    public ChristmasEventCalendar(Set<LocalDate> specialDiscountDays) { //TODO: 원시값 포장
-        this.specialDiscountDays = specialDiscountDays;
-    }
+    private final SpecialDays specialDays = new SpecialDays();
 
     @Override
     public boolean isWeekday(LocalDate date) {
@@ -29,7 +23,7 @@ public class ChristmasEventCalendar extends EventCalendar {
 
     @Override
     public boolean isSpecialDiscountDay(LocalDate date) {
-        return specialDiscountDays.contains(date);
+        return specialDays.contains(date);
     }
 
     @Override
