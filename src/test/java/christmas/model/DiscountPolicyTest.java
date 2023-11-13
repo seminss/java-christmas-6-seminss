@@ -22,6 +22,6 @@ public class DiscountPolicyTest {
     })
     @ParameterizedTest
     public void DDayDiscountPolicyTest(int day, int expectedDiscount) {
-        Assertions.assertEquals(discountPolicy.getDDayDiscountPrice(day), expectedDiscount);
+        Assertions.assertEquals(discountPolicy.calculateDDayDiscountPrice(day), expectedDiscount);
     }
 }

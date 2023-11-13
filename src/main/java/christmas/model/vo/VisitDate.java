@@ -1,4 +1,4 @@
-package christmas.model.valueObject;
+package christmas.model.vo;
 
 import christmas.exception.business.InvalidDateException;
 

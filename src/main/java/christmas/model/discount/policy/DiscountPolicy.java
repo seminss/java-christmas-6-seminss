@@ -1,11 +1,15 @@
 package christmas.model.discount.policy;
 
+import christmas.model.menu.Menu;
+
 public interface DiscountPolicy {
-    int getDDayDiscountPrice(int visitDay);
+    int calculateDDayDiscountPrice(int visitDay);
 
-    int getWeekdayDiscountPrice(int dessertQuantity);
+    int calculateWeekdayDiscountPrice(int dessertQuantity);
 
-    int getWeekendDiscountPrice(int mainQuantity);
+    int calculateWeekendDiscountPrice(int mainQuantity);
 
-    int getSpecialDiscountPrice();
+    int calculateSpecialDiscountPrice();
+
+    Menu getGiveawayItem();
 }

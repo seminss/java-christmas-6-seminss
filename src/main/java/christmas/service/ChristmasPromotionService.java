@@ -1,18 +1,22 @@
 package christmas.service;
 
-import christmas.model.discount.DiscountAmount;
-import christmas.model.valueObject.InitialOrderAmount;
+import christmas.model.discount.DiscountResult;
 import christmas.model.order.Order;
-import christmas.model.valueObject.VisitDate;
+import christmas.model.vo.VisitDate;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 
 public class ChristmasPromotionService {
-    private VisitDate visitDate;
-    private Order order;
-    private InitialOrderAmount initialOrderAmount;
-    private DiscountAmount discountAmount;
+
+    Order order;
+    VisitDate visitDate;
+    ChristmasDiscountCalculator discountCalculator;
+
+
+    public ChristmasPromotionService() {
+
+    }
 
     public void createVisitDate(Integer readVisitDate) {
         visitDate = new VisitDate(readVisitDate);
@@ -22,10 +26,11 @@ public class ChristmasPromotionService {
         order = new Order(readOrder);
     }
 
-    public boolean checkEventQualification() {
-        return initialOrderAmount.amount() > 10000;
-    }
+    /* public boolean checkEventQualification() {
+        return order.getInitialOrderAmount() > 10000;
+    }**/
 
-    public void calculateDiscounts() {
+    public DiscountResult generateDiscountResult() {
+        return discountCalculator.calculateDiscounts(visitDate, order);
     }
 }

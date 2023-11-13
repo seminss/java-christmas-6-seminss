@@ -1,6 +1,6 @@
 package christmas.model.validate;
 
-import christmas.model.valueObject.VisitDate;
+import christmas.model.vo.VisitDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

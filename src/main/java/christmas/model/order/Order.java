@@ -2,7 +2,6 @@ package christmas.model.order;
 
 import christmas.exception.business.InvalidOrderException;
 import christmas.model.menu.Menu;
-import christmas.model.valueObject.InitialOrderAmount;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;

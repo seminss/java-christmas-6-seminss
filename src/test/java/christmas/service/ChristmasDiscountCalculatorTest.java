@@ -3,7 +3,7 @@ package christmas.service;
 import christmas.model.discount.DiscountAmount;
 import christmas.model.discount.DiscountResult;
 import christmas.model.order.Order;
-import christmas.model.valueObject.VisitDate;
+import christmas.model.vo.VisitDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.AbstractMap;
 import java.util.List;
 
-import static christmas.model.discount.DiscountType.*;
-import static christmas.model.menu.Menu.CHAMPAGNE;
+import static christmas.model.discount.policy.DiscountConfig.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -28,9 +27,9 @@ class ChristmasDiscountCalculatorTest {
                         new AbstractMap.SimpleEntry<>("해산물파스타", 5),
                         new AbstractMap.SimpleEntry<>("초코케이크", 2),
                         new AbstractMap.SimpleEntry<>("샴페인", 1)));
-        ChristmasDiscountCalculator calculator = new ChristmasDiscountCalculator(visitDate, order);
+        ChristmasDiscountCalculator calculator = new ChristmasDiscountCalculator();
 
-        DiscountResult discountResult = calculator.calculateDiscounts();
+        DiscountResult discountResult = calculator.calculateDiscounts(visitDate,order);
         List<DiscountAmount> discounts = discountResult.getDiscounts();
 
         System.out.println(discounts);
@@ -44,12 +43,9 @@ class ChristmasDiscountCalculatorTest {
         assertTrue(discounts.contains(new DiscountAmount(SPECIAL_DISCOUNT, 1000)),
                 "특별 할인 문제");
 
-        assertTrue(discounts.contains(new DiscountAmount(GIVEAWAY_DISCOUNT, CHAMPAGNE.getPrice())),
-                "증정 할인 문제");
-
         assertTrue(discounts.contains(new DiscountAmount(DDAY_DISCOUNT, (17 - 1) * 100 + 1000)),
                 "크리스마스 디데이 할인 문제");
 
-        Assertions.assertEquals(discountResult.getTotalDiscount(), 4046 + 1000 + 25000 + 2600);
+        Assertions.assertEquals(discountResult.getTotalDiscount(), 4046 + 1000 + 2600);
     }
 }

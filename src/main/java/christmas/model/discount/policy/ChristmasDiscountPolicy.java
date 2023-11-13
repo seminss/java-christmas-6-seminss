@@ -1,30 +1,35 @@
 package christmas.model.discount.policy;
 
+import christmas.model.menu.Menu;
+
+import static christmas.model.discount.policy.DiscountConfig.*;
+
 public class ChristmasDiscountPolicy implements DiscountPolicy {
-    static int DDay = 1;
-    static int STANDARD_AMOUNT = 1000;
-    static int INCREASE_AMOUNT = 100;
-    static int DISCOUNT_PRICE_PER_MENU=2023;
-    static int SPECIAL_DISCOUNT_PRICE=1000; //TODO: DiscountType에 합쳐도 될 듯
+    static int EVENT_START_DAY = 1;
+    static Menu GIVEAWAY_ITEM = Menu.CHAMPAGNE;
 
-    @Override
-    public int getDDayDiscountPrice(int visitDay) {
-        return STANDARD_AMOUNT + (visitDay - DDay) * INCREASE_AMOUNT;
+    public Menu getGiveawayItem() {
+        return GIVEAWAY_ITEM;
     }
 
     @Override
-    public int getWeekdayDiscountPrice(int dessertQuantity) {
-        return DISCOUNT_PRICE_PER_MENU*dessertQuantity;
+    public int calculateDDayDiscountPrice(int visitDay) {
+        return DDAY_DISCOUNT.getStandardAmount()
+                + (visitDay - EVENT_START_DAY) * DDAY_DISCOUNT.getIncreaseAmount();
     }
 
     @Override
-    public int getWeekendDiscountPrice(int mainQuantity) {
-        return DISCOUNT_PRICE_PER_MENU * mainQuantity;
+    public int calculateWeekdayDiscountPrice(int dessertQuantity) {
+        return WEEKDAY_DISCOUNT.getIncreaseAmount() *dessertQuantity;
     }
 
     @Override
-    public int getSpecialDiscountPrice() {
-        return SPECIAL_DISCOUNT_PRICE;
+    public int calculateWeekendDiscountPrice(int mainQuantity) {
+        return WEEKEND_DISCOUNT.getIncreaseAmount() * mainQuantity;
     }
 
+    @Override
+    public int calculateSpecialDiscountPrice() {
+        return SPECIAL_DISCOUNT.getStandardAmount();
+    }
 }

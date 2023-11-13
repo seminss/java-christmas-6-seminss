@@ -18,6 +18,6 @@ public class ChristmasPromotion {
 
         OutputView.printTakeOrderMessage();
         controller.setOrder(InputView.readOrder());
-
+        controller.makeResult();
     }
 }

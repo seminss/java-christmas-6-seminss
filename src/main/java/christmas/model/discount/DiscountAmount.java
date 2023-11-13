@@ -1,4 +1,6 @@
 package christmas.model.discount;
 
-public record DiscountAmount(DiscountType discountType, int amount) {
+import christmas.model.discount.policy.DiscountConfig;
+
+public record DiscountAmount(DiscountConfig discountConfig, int amount) {
 }

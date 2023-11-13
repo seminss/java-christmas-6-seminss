@@ -21,4 +21,7 @@ public class ChristmasPromotionController {
         service.createOrder(readOrder);
     }
 
+    public void makeResult() {
+        service.generateDiscountResult();
+    }
 }
