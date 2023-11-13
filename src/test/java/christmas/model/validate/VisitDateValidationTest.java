@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.validate;
 
 import christmas.model.valueObject.VisitDate;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Nested
 @DisplayName("VisitDate 모델 validate 테스트")
-public class VisitDateTest {
+public class VisitDateValidationTest {
     @DisplayName("방문 날짜가 1 이상 31 이하면 성공한다.")
     @ValueSource(ints = {1, 10, 20, 31})
     @ParameterizedTest

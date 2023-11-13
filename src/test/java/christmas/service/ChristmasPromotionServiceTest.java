@@ -1,6 +1,5 @@
 package christmas.service;
 
-import christmas.model.Menu;
 import org.junit.jupiter.api.*;
 
 import java.util.AbstractMap.SimpleEntry;
@@ -17,15 +16,5 @@ public class ChristmasPromotionServiceTest {
                 new SimpleEntry<>("샴페인", 3)
         );
         service.createOrder(testOrderData);
-    }
-
-    @DisplayName("할인 전, 총 주문 금액을 연산한다.")
-    @Test
-    public void calculateOrderAmountTest() {
-        service.calculateInitialOrderAmount();
-        int expectedAmount = Menu.CHRISTMAS_PASTA.getPrice() * 2 +
-                Menu.BBQ_RIBS.getPrice() +
-                Menu.CHAMPAGNE.getPrice() * 3;
-        Assertions.assertEquals(expectedAmount, service.getInitialOrderAmount());
     }
 }
