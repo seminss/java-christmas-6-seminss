@@ -15,9 +15,10 @@ public class ChristmasPromotion {
         OutputView.printIntroductionMessage();
         OutputView.printTakeDateMessage();
         controller.setVisitDate(InputView.readVisitDate());
-
         OutputView.printTakeOrderMessage();
         controller.setOrder(InputView.readOrder());
-        controller.makeResult();
+        OutputView.printPromotionPreviewMessage(controller.formatVisitDate());
+        OutputView.printFormattedOrderMessage(controller.formatOrder());
+        OutputView.printFormattedDiscountResultMessage(controller.formatDiscountResult());
     }
 }
