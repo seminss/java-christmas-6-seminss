@@ -1,6 +1,8 @@
-package christmas.model;
+package christmas.model.order;
 
 import christmas.exception.business.InvalidOrderException;
+import christmas.model.menu.Menu;
+import christmas.model.valueObject.InitialOrderAmount;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
@@ -13,6 +15,7 @@ import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
 
 public class Order {
     private final EnumMap<Menu, Integer> order;
+    private InitialOrderAmount initialOrderAmount;
 
     public Order(List<SimpleEntry<String, Integer>> readOrder) {
         validateDrinksOnly(readOrder);
@@ -26,6 +29,33 @@ public class Order {
             order.put(menu, quantity);
         }
         validateTotalQuantity(order.values());
+        calculateInitialOrderAmount();
+    }
+
+    public int getMainQuantity() {
+        int mainQuantity = 0;
+        for (Menu menu : order.keySet()) {
+            System.out.println(menu);
+            if (menu.getCategory() == Menu.Category.MAIN) {
+                mainQuantity += order.get(menu);
+            }
+        }
+        return mainQuantity;
+    }
+
+    public int getDessertQuantity() {
+        int dessertQuantity = 0;
+        for (Menu menu : order.keySet()) {
+            System.out.println(menu);
+            if (menu.getCategory() == Menu.Category.DESSERT) {
+                dessertQuantity += order.get(menu);
+            }
+        }
+        return dessertQuantity;
+    }
+
+    public int getInitialOrderAmount() {
+        return initialOrderAmount.amount();
     }
 
 
@@ -68,7 +98,12 @@ public class Order {
         }
     }
 
-    public EnumMap<Menu, Integer> getOrder() {
-        return order;
+    private void calculateInitialOrderAmount() {
+        int amount = 0;
+        for (Menu menu : Menu.values()) {
+            int quantity = order.getOrDefault(menu, 0);
+            amount += quantity * menu.getPrice();
+        }
+        initialOrderAmount = new InitialOrderAmount(amount);
     }
 }
