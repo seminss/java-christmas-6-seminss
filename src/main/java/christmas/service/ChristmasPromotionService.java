@@ -12,11 +12,11 @@ public class ChristmasPromotionService {
     VisitDate visitDate;
     ChristmasDiscountCalculator discountCalculator = new ChristmasDiscountCalculator();
 
-    public void createVisitDate(Integer readVisitDate) {
+    public void setVisitDate(Integer readVisitDate) {
         visitDate = new VisitDate(readVisitDate);
     }
 
-    public void createOrder(List<SimpleEntry<String, Integer>> readOrder) {
+    public void setOrder(List<SimpleEntry<String, Integer>> readOrder) {
         order = new Order(readOrder);
     }
 
@@ -35,8 +35,7 @@ public class ChristmasPromotionService {
                 discountDetails.getFinalPaymentAmount(), discountDetails.getBadge());
     }
 
+}
     /* public boolean checkEventQualification() {
         return order.getInitialOrderAmount() > 10000;
     }**/
-
-}

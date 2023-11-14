@@ -1,8 +1,10 @@
 package christmas;
 
+import christmas.controller.ChristmasPromotionController;
+
 public class Application {
     public static void main(String[] args) {
-        ChristmasPromotion christmasPromotion = new ChristmasPromotion();
-        christmasPromotion.run();
+        ChristmasPromotionController christmasPromotionController = new ChristmasPromotionController();
+        christmasPromotionController.run();
     }
 }

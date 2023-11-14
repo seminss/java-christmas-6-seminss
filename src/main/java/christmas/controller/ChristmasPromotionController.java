@@ -1,37 +1,49 @@
 package christmas.controller;
 
 import christmas.service.ChristmasPromotionService;
-import christmas.view.output.DetailsFormatter;
-
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
+import christmas.view.input.InputView;
+import christmas.model.DetailsFormatter;
+import christmas.view.output.OutputView;
 
 public class ChristmasPromotionController {
-
     private final ChristmasPromotionService service;
 
     public ChristmasPromotionController() {
         service = new ChristmasPromotionService();
     }
 
-    public void setVisitDate(Integer readVisitDate) {
-        service.createVisitDate(readVisitDate);
+    public void run() {
+        takeVisitDate();
+        takeOrder();
+        previewEventBenefits();
     }
 
-    public void setOrder(List<SimpleEntry<String, Integer>> readOrder) {
-        service.createOrder(readOrder);
+    private void takeVisitDate() {
+        OutputView.printIntroductionMessage();
+        OutputView.printTakeDateMessage();
+        service.setVisitDate(InputView.getValidInput(InputView::readVisitDate));
     }
 
-    public DetailsFormatter formatVisitDate() {
+    private void takeOrder() {
+        OutputView.printTakeOrderMessage();
+        service.setOrder(InputView.getValidInput(InputView::readOrder));
+    }
+
+    private void previewEventBenefits() {
+        OutputView.printPromotionPreviewMessage(formatVisitDate());
+        OutputView.printFormattedOrderMessage(formatOrder());
+        OutputView.printFormattedDiscountResultMessage(formatDiscountResult());
+    }
+
+    private DetailsFormatter formatVisitDate() {
         return DetailsFormatter.visitDateFormatter(service.getVisitDate());
     }
 
-    public DetailsFormatter formatOrder() {
+    private DetailsFormatter formatOrder() {
         return DetailsFormatter.OrderFormatter(service.getOrder());
     }
 
-    public DetailsFormatter formatDiscountResult() {
+    private DetailsFormatter formatDiscountResult() {
         return DetailsFormatter.DiscountResultFormatter(service.getPromotionSummary());
     }
-
 }

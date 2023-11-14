@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 
-public class ChristmasPromotionServiceTest {
+public class ChristmasPromotionControllerServiceTest {
     private final ChristmasPromotionService service = new ChristmasPromotionService();
 
     @BeforeEach
@@ -15,6 +15,6 @@ public class ChristmasPromotionServiceTest {
                 new SimpleEntry<>("바비큐립", 1),
                 new SimpleEntry<>("샴페인", 3)
         );
-        service.createOrder(testOrderData);
+        service.setOrder(testOrderData);
     }
 }
