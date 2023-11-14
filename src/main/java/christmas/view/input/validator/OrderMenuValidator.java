@@ -4,7 +4,6 @@ import christmas.exception.input.EmptyInputException;
 import christmas.exception.input.InvalidOrderException;
 
 import static christmas.constant.EventSymbol.*;
-import static christmas.exception.ValidationErrorMessage.INPUT_EMPTY;
 import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
 
 public class OrderMenuValidator {
@@ -15,7 +14,7 @@ public class OrderMenuValidator {
 
     private static void validateNotEmpty(String userInput) {
         if (userInput.isEmpty()) {
-            throw new EmptyInputException(INPUT_EMPTY.getMessage());
+            throw new EmptyInputException(INVALID_ORDER.getMessage());
         }
     }
 

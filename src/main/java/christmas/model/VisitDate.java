@@ -5,7 +5,7 @@ import christmas.exception.business.InvalidDateException;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static christmas.exception.ValidationErrorMessage.INPUT_NOT_INTEGER;
+import static christmas.exception.ValidationErrorMessage.INVALID_DATE;
 
 public final class VisitDate {
     private final LocalDate date;
@@ -17,7 +17,7 @@ public final class VisitDate {
 
     private void validateRange(int date) {
         if (date < 1 || date > 31) { //TODO: LocalDate로 바꾸기
-            throw new InvalidDateException(INPUT_NOT_INTEGER.getMessage());
+            throw new InvalidDateException(INVALID_DATE.getMessage());
         }
     }
 

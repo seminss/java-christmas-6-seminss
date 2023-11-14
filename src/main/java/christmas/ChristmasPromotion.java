@@ -14,9 +14,23 @@ public class ChristmasPromotion {
     public void run() {
         OutputView.printIntroductionMessage();
         OutputView.printTakeDateMessage();
-        controller.setVisitDate(InputView.readVisitDate());
+        while (true) {
+            try {
+                controller.setVisitDate(InputView.readVisitDate());
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
         OutputView.printTakeOrderMessage();
-        controller.setOrder(InputView.readOrder());
+        while (true) {
+            try {
+                controller.setOrder(InputView.readOrder());
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
         OutputView.printPromotionPreviewMessage(controller.formatVisitDate());
         OutputView.printFormattedOrderMessage(controller.formatOrder());
         OutputView.printFormattedDiscountResultMessage(controller.formatDiscountResult());

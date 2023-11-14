@@ -9,6 +9,7 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.List;
 
+import static christmas.exception.ValidationErrorMessage.CAN_NOT_DRINK_ONLY;
 import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
 
 public class Order {
@@ -70,7 +71,7 @@ public class Order {
             categories.add(menu.getCategory());
         }
         if (categories.size() == 1 && categories.contains(Menu.Category.DRINK)) {
-            throw new InvalidOrderException(INVALID_ORDER.getMessage());
+            throw new InvalidOrderException(CAN_NOT_DRINK_ONLY.getMessage());
         }
     }
 

@@ -27,9 +27,12 @@ public class OutputView {
         printMessage(orderMessage.toString());
     }
 
+    public static void printErrorMessage(String message) {
+        printMessage(message);
+    }
+
     private static void printMessage(String message) {
         System.out.println(message);
     }
-
 
 }
