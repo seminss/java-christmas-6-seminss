@@ -13,7 +13,7 @@ public class DiscountResult {
     public DiscountResult(int initialOrderAmount, DiscountBenefits benefits) {
         this.totalDiscountAMount = calculateTotalAmount(benefits);
         this.finalPaymentAmount = initialOrderAmount + calculateTotalDiscountExcludingGiveaway(benefits);
-        this.badge = initializeBadge(finalPaymentAmount);
+        this.badge = initializeBadge();
     }
 
     public int getTotalDiscountAMount() {
@@ -42,9 +42,9 @@ public class DiscountResult {
         return totalDiscount;
     }
 
-    private Badge initializeBadge(int finalPaymentAmount) {
+    private Badge initializeBadge() {
         for (Badge badge : Badge.values()) {
-            if (finalPaymentAmount > badge.getThreshold()) {
+            if (totalDiscountAMount > badge.getThreshold()) {
                 return badge;
             }
         }
