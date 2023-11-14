@@ -27,7 +27,7 @@ public record PromotionSummary(List<DiscountAmount> discounts,
     }
 
     public String formattedDiscountDetails() {
-        if (discounts.isEmpty() || (discounts.size() == 1 && discounts.get(0).amount() == 0)) {
+        if (discounts.isEmpty() || discounts.stream().allMatch(d -> d.amount() == 0)) {
             return "없음";
         }
         return discounts.stream()

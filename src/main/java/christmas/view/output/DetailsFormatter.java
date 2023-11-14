@@ -13,6 +13,8 @@ import static christmas.constant.EventSymbol.DATA_FORMAT;
 public class DetailsFormatter {
     private final StringBuilder sb = new StringBuilder();
     private final DecimalFormat df = new DecimalFormat(DATA_FORMAT.getValue());
+    private static final String ONE_LINE = System.lineSeparator();
+    private static final String TWO_LINE = ONE_LINE + ONE_LINE;
 
     public DetailsFormatter(DiscountBenefits result) {
     }
@@ -36,26 +38,26 @@ public class DetailsFormatter {
     }
 
     public DetailsFormatter(Order order) {
-        sb.append("\n<주문 메뉴>\n");
+        sb.append(ONE_LINE).append("<주문 메뉴>").append(ONE_LINE);
         for (Menu menu : order.getOrderedMenu().keySet()) {
             sb.append(menu.getName())
                     .append(" ")
-                    .append(order.getOrderedMenu().get(menu)).append("개\n");
+                    .append(order.getOrderedMenu().get(menu)).append("개")
+                    .append(TWO_LINE);
         }
-        sb.append("\n<할인 전 총주문 금액>\n");
+        sb.append("<할인 전 총주문 금액>").append(ONE_LINE);
         sb.append(df.format(order.getInitialOrderAmount())).append("원");
     }
 
     public DetailsFormatter(PromotionSummary summary) {
-        sb.append("\n<증정 메뉴>\n")
-                .append(summary.formattedGiveawayItem())
-                .append("\n\n<혜택 내역>\n")
-                .append(summary.formattedDiscountDetails())
-                .append("\n\n<총혜택 금액>\n")
-                .append(summary.formattedTotalDiscount())
-                .append("\n\n<할인 후 예상 결제 금액>\n")
-                .append(summary.formattedFinalPaymentAmount())
-                .append("\n\n<12월 이벤트 배지>\n")
+        sb.append(ONE_LINE).append("<증정 메뉴>").append(ONE_LINE)
+                .append(summary.formattedGiveawayItem() + TWO_LINE).append("<혜택 내역>").append(ONE_LINE)
+                .append(summary.formattedDiscountDetails() + TWO_LINE)
+                .append("<총혜택 금액>" + ONE_LINE)
+                .append(summary.formattedTotalDiscount() + TWO_LINE)
+                .append("<할인 후 예상 결제 금액>" + ONE_LINE)
+                .append(summary.formattedFinalPaymentAmount() + TWO_LINE)
+                .append("<12월 이벤트 배지>" + ONE_LINE)
                 .append(summary.formattedEventBadge());
     }
 
