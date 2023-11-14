@@ -7,7 +7,7 @@ public enum DiscountSettings {
     WEEKDAY_DISCOUNT("평일 할인", 0, 2023),
     WEEKEND_DISCOUNT("주말 할인", 0, 2023),
     SPECIAL_DISCOUNT("특별 할인", 1000, 0),
-    GIVEAWAY_ITEM("증정 이벤트", Giveaway.CHAMPAGNE.getPrice(), 0);
+    GIVEAWAY_DISCOUNT("증정 이벤트", Giveaway.CHAMPAGNE.getPrice(), 0);
 
     private final String description;
     private final int standardAmount;

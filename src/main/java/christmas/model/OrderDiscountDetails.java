@@ -3,16 +3,16 @@ package christmas.model;
 import christmas.config.Badge;
 import christmas.model.vo.DiscountAmount;
 
-import static christmas.model.policy.discount.DiscountSettings.GIVEAWAY_ITEM;
+import static christmas.model.policy.discount.DiscountSettings.GIVEAWAY_DISCOUNT;
 
 public class OrderDiscountDetails {
     private final int totalDiscountAmount;
     private final int finalPaymentAmount;
     private final Badge badge;
 
-    public OrderDiscountDetails(int baseOrderValue, DiscountedItems benefits) {
-        this.totalDiscountAmount = calculateTotalDiscount(benefits);
-        this.finalPaymentAmount = baseOrderValue + calculateTotalDiscountExcludingGiveaway(benefits);
+    public OrderDiscountDetails(int baseOrderAmount, DiscountedItems discountedItems) {
+        this.totalDiscountAmount = calculateTotalDiscount(discountedItems);
+        this.finalPaymentAmount = baseOrderAmount + calculateTotalDiscountExcludingGiveaway(discountedItems);
         this.badge = initializeBadge();
     }
 
@@ -29,13 +29,13 @@ public class OrderDiscountDetails {
     }
 
     private int calculateTotalDiscount(DiscountedItems benefits) {
-        return benefits.discounts().stream().mapToInt(DiscountAmount::amount).sum();
+        return benefits.items().stream().mapToInt(DiscountAmount::amount).sum();
     }
 
     private int calculateTotalDiscountExcludingGiveaway(DiscountedItems benefits) {
         int totalDiscount = 0;
-        for (DiscountAmount discount : benefits.discounts()) {
-            if (!discount.discountSettings().equals(GIVEAWAY_ITEM)) {
+        for (DiscountAmount discount : benefits.items()) {
+            if (!discount.discountSettings().equals(GIVEAWAY_DISCOUNT)) {
                 totalDiscount += discount.amount();
             }
         }
@@ -48,6 +48,6 @@ public class OrderDiscountDetails {
                 return badge;
             }
         }
-        return Badge.NONE;
+        return null;
     }
 }

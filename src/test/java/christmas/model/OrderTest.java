@@ -29,7 +29,7 @@ public class OrderTest {
                 Menu.BBQ_RIBS.getPrice()+
                 Menu.CHOCOLATE_CAKE.getPrice() * 2 +
                 Menu.CHAMPAGNE.getPrice();
-        Assertions.assertEquals(expectedAmount, order.calculateTotalOrderAmount());
+        Assertions.assertEquals(expectedAmount, order.calculateBaseOrderAmount());
     }
 
     @DisplayName("메인 메뉴 개수를 반환한다.")

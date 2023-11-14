@@ -29,7 +29,7 @@ class ChristmasDiscountCalculatorTest {
         ChristmasDiscountCalculator calculator = new ChristmasDiscountCalculator();
 
         DiscountedItems discountedItems = calculator.calculateDiscounts(visitDate, order);
-        List<DiscountAmount> discounts = discountedItems.discounts();
+        List<DiscountAmount> discounts = discountedItems.items();
 
         System.out.println(discounts);
 

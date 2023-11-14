@@ -3,7 +3,7 @@ package christmas.constant;
 public enum EventSymbol {
     MENU_SEPARATOR(","),
     MENU_CONNECTOR("-"),
-    DATA_FORMAT("###,###");
+    DATA_FORMAT("###,###원");
 
     private final String value;
 

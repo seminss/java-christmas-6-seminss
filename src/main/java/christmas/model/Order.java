@@ -54,7 +54,7 @@ public class Order {
         return dessertQuantity;
     }
 
-    public int calculateTotalOrderAmount() {
+    public int calculateBaseOrderAmount() {
         int amount = 0;
         for (Menu menu : Menu.values()) {
             int quantity = orderedMenu.getOrDefault(menu, 0);

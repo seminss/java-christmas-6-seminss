@@ -77,10 +77,10 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountGiveaway(Order order) {
-        if (order.calculateTotalOrderAmount() > GIVEAWAY_THRESHOLD) {
+        if (order.calculateBaseOrderAmount() > GIVEAWAY_THRESHOLD) {
             int amount = discountPolicy.calculateGiveawayItem();
-            return new DiscountAmount(GIVEAWAY_ITEM, amount);
+            return new DiscountAmount(GIVEAWAY_DISCOUNT, amount);
         }
-        return new DiscountAmount(GIVEAWAY_ITEM, 0);
+        return new DiscountAmount(GIVEAWAY_DISCOUNT, 0);
     }
 }

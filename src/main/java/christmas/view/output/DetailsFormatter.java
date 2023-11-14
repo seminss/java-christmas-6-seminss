@@ -1,10 +1,9 @@
 package christmas.view.output;
 
 import christmas.config.Menu;
-import christmas.model.DiscountedItems;
 import christmas.model.Order;
-import christmas.model.summary.PromotionSummary;
 import christmas.model.VisitDate;
+import christmas.model.summary.PromotionSummary;
 
 import java.text.DecimalFormat;
 
@@ -40,24 +39,24 @@ public class DetailsFormatter {
             sb.append(menu.getName())
                     .append(" ")
                     .append(order.getOrderedMenu().get(menu)).append("개")
-                    .append(TWO_LINE);
+                    .append(ONE_LINE);
         }
-        sb.append("<할인 전 총주문 금액>").append(ONE_LINE);
-        sb.append(df.format(order.calculateTotalOrderAmount())).append("원");
+        sb.append(ONE_LINE).append("<할인 전 총주문 금액>").append(ONE_LINE);
+        sb.append(df.format(order.calculateBaseOrderAmount()));
     }
 
     public DetailsFormatter(PromotionSummary summary) {
         sb.append(ONE_LINE)
                 .append("<증정 메뉴>" + ONE_LINE)
-                .append(summary.giveawayItemDetails() + TWO_LINE)
+                .append(summary.getGiveawayDetails() + TWO_LINE)
                 .append("<혜택 내역>" + ONE_LINE)
-                .append(summary.discountDetails() + TWO_LINE)
+                .append(summary.getDiscountDetails() + TWO_LINE)
                 .append("<총혜택 금액>" + ONE_LINE)
-                .append(summary.totalDiscountDetails() + TWO_LINE)
+                .append(summary.getTotalDiscountAmountDetails() + TWO_LINE)
                 .append("<할인 후 예상 결제 금액>" + ONE_LINE)
-                .append(summary.finalPaymentAmountDetails() + TWO_LINE)
+                .append(summary.getFinalPaymentAmountDetails() + TWO_LINE)
                 .append("<12월 이벤트 배지>" + ONE_LINE)
-                .append(summary.eventBadgeDetails());
+                .append(summary.getEventBadgeDetails());
     }
 
     @Override
