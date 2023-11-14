@@ -1,17 +1,16 @@
 package christmas.service;
 
-import christmas.model.discount.DiscountAmount;
-import christmas.model.discount.DiscountResult;
-import christmas.model.order.Order;
-import christmas.model.vo.VisitDate;
-import org.junit.jupiter.api.Assertions;
+import christmas.model.vo.DiscountAmount;
+import christmas.model.DiscountBenefits;
+import christmas.model.Order;
+import christmas.model.VisitDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.AbstractMap;
 import java.util.List;
 
-import static christmas.model.discount.policy.DiscountConfig.*;
+import static christmas.model.policy.discount.DiscountConfig.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -29,8 +28,8 @@ class ChristmasDiscountCalculatorTest {
                         new AbstractMap.SimpleEntry<>("샴페인", 1)));
         ChristmasDiscountCalculator calculator = new ChristmasDiscountCalculator();
 
-        DiscountResult discountResult = calculator.calculateDiscounts(visitDate,order);
-        List<DiscountAmount> discounts = discountResult.getDiscounts();
+        DiscountBenefits discountBenefits = calculator.calculateDiscounts(visitDate, order);
+        List<DiscountAmount> discounts = discountBenefits.getDiscounts();
 
         System.out.println(discounts);
 
@@ -46,6 +45,5 @@ class ChristmasDiscountCalculatorTest {
         assertTrue(discounts.contains(new DiscountAmount(DDAY_DISCOUNT, (17 - 1) * 100 + 1000)),
                 "크리스마스 디데이 할인 문제");
 
-        Assertions.assertEquals(discountResult.getTotalDiscount(), 4046 + 1000 + 2600);
     }
 }

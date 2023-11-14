@@ -1,20 +1,18 @@
 package christmas.service;
 
-import christmas.model.calendar.ChristmasEventCalendar;
-import christmas.model.calendar.EventCalendar;
-import christmas.model.discount.policy.ChristmasDiscountPolicy;
-import christmas.model.discount.policy.DiscountPolicy;
-import christmas.model.discount.DiscountAmount;
-import christmas.model.discount.DiscountResult;
-import christmas.model.menu.Menu;
-import christmas.model.order.Order;
-import christmas.model.vo.VisitDate;
+import christmas.model.policy.calendar.ChristmasEventCalendar;
+import christmas.model.policy.calendar.EventCalendar;
+import christmas.model.policy.discount.ChristmasDiscountPolicy;
+import christmas.model.policy.discount.DiscountPolicy;
+import christmas.model.vo.DiscountAmount;
+import christmas.model.DiscountBenefits;
+import christmas.model.Order;
+import christmas.model.VisitDate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static christmas.model.discount.policy.DiscountConfig.*;
+import static christmas.model.policy.discount.DiscountConfig.*;
 
 public class ChristmasDiscountCalculator {
 
@@ -27,14 +25,21 @@ public class ChristmasDiscountCalculator {
         this.discountPolicy = new ChristmasDiscountPolicy();
     }
 
-    public DiscountResult calculateDiscounts(VisitDate visitDate, Order order) {
+    public DiscountBenefits calculateDiscounts(VisitDate visitDate, Order order) {
         List<DiscountAmount> discounts = new ArrayList<>();
-        discounts.add(discountWeekend(visitDate, order));
-        discounts.add(discountWeekDay(visitDate, order));
-        discounts.add(discountSpecialDay(visitDate));
+        discounts.add(discountGiveaway(order));
         discounts.add(discountDDay(visitDate));
-        Optional<Menu> giveawayItem = determineGiveaway(order);
-        return new DiscountResult(discounts, giveawayItem);
+        discounts.add(discountSpecialDay(visitDate));
+        if (isWeekday(visitDate)) {
+            discounts.add(discountWeekDay(visitDate, order));
+            return new DiscountBenefits(discounts);
+        }
+        discounts.add(discountWeekend(visitDate, order));
+        return new DiscountBenefits(discounts);
+    }
+
+    private boolean isWeekday(VisitDate visitDate) {
+        return eventCalendar.isWeekday(visitDate.getDate());
     }
 
     private DiscountAmount discountSpecialDay(VisitDate visitDate) {
@@ -55,7 +60,7 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountWeekDay(VisitDate visitDate, Order order) {
-        if (eventCalendar.isWeekday(visitDate.getDate())) {
+        if (isWeekday(visitDate)) {
             int dessertQuantity = order.getDessertQuantity();
             int amount = discountPolicy.calculateWeekdayDiscountPrice(dessertQuantity);
             return new DiscountAmount(WEEKDAY_DISCOUNT, amount);
@@ -71,10 +76,11 @@ public class ChristmasDiscountCalculator {
         return new DiscountAmount(DDAY_DISCOUNT, 0);
     }
 
-    private Optional<Menu> determineGiveaway(Order order) {
+    private DiscountAmount discountGiveaway(Order order) {
         if (order.getInitialOrderAmount() > GIVEAWAY_THRESHOLD) {
-            return Optional.of(discountPolicy.getGiveawayItem());
+            int amount = discountPolicy.calculateGiveawayItem();
+            return new DiscountAmount(GIVEAWAY_ITEM, amount);
         }
-        return Optional.empty();
+        return new DiscountAmount(GIVEAWAY_ITEM, 0);
     }
 }

@@ -2,7 +2,8 @@ package christmas.constant;
 
 public enum EventSymbol {
     MENU_SEPARATOR(","),
-    MENU_CONNECTOR("-");
+    MENU_CONNECTOR("-"),
+    DATA_FORMAT("###,###");
 
     private final String value;
 

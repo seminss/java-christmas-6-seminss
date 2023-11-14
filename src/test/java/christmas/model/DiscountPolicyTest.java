@@ -1,7 +1,7 @@
 package christmas.model;
 
-import christmas.model.discount.policy.ChristmasDiscountPolicy;
-import christmas.model.discount.policy.DiscountPolicy;
+import christmas.model.policy.discount.ChristmasDiscountPolicy;
+import christmas.model.policy.discount.DiscountPolicy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

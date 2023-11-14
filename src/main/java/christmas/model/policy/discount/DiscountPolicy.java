@@ -1,6 +1,4 @@
-package christmas.model.discount.policy;
-
-import christmas.model.menu.Menu;
+package christmas.model.policy.discount;
 
 public interface DiscountPolicy {
     int calculateDDayDiscountPrice(int visitDay);
@@ -11,5 +9,5 @@ public interface DiscountPolicy {
 
     int calculateSpecialDiscountPrice();
 
-    Menu getGiveawayItem();
+    int calculateGiveawayItem();
 }

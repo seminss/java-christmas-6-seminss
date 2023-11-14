@@ -25,9 +25,9 @@ public class ChristmasPromotionService {
 
     public PromotionSummary getPromotionSummary() {
         DiscountBenefits benefits = discountCalculator.calculateDiscounts(visitDate, order);
-        DiscountResult result = new DiscountResult(order.getInitialOrderAmount(), benefits.getTotalDiscount());
-        return new PromotionSummary(benefits.getGiveawayItem(), benefits.getDiscounts()
-                , benefits.getTotalDiscount(), result.getFinalPaymentAmount(), result.getBadge());
+        DiscountResult result = new DiscountResult(order.getInitialOrderAmount(), benefits);
+        return new PromotionSummary(benefits.getDiscounts(), result.getTotalDiscountAMount(),
+                result.getFinalPaymentAmount(), result.getBadge());
     }
 
     public VisitDate getVisitDate() {

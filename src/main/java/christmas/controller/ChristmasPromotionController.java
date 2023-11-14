@@ -23,14 +23,14 @@ public class ChristmasPromotionController {
     }
 
     public DetailsFormatter formatOrder() {
-        return new DetailsFormatter(service.getOrder());
+        return DetailsFormatter.OrderFormatter(service.getOrder());
     }
 
     public DetailsFormatter formatDiscountResult() {
-        return new DetailsFormatter(service.getDiscountResult());
+        return DetailsFormatter.DiscountResultFormatter(service.getPromotionSummary());
     }
 
     public DetailsFormatter formatVisitDate() {
-        return new DetailsFormatter(service.getVisitDate());
+        return DetailsFormatter.visitDateFormatter(service.getVisitDate());
     }
 }
