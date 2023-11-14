@@ -12,11 +12,10 @@ import christmas.model.VisitDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static christmas.constant.EventThreshold.GIVEAWAY_THRESHOLD;
 import static christmas.model.policy.discount.DiscountSettings.*;
 
 public class ChristmasDiscountCalculator {
-
-    private final int GIVEAWAY_THRESHOLD = 120_000;
     private final EventCalendar eventCalendar;
     private final DiscountPolicy discountPolicy;
 
@@ -77,7 +76,7 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountGiveaway(Order order) {
-        if (order.calculateBaseOrderAmount() > GIVEAWAY_THRESHOLD) {
+        if (order.calculateBaseOrderAmount() > GIVEAWAY_THRESHOLD.getAmount()) {
             int amount = discountPolicy.calculateGiveawayItem();
             return new DiscountAmount(GIVEAWAY_DISCOUNT, amount);
         }

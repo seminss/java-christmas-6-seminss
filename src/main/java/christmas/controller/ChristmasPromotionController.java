@@ -2,7 +2,7 @@ package christmas.controller;
 
 import christmas.service.ChristmasPromotionService;
 import christmas.view.input.InputView;
-import christmas.model.DetailsFormatter;
+import christmas.view.output.DetailsFormatter;
 import christmas.view.output.OutputView;
 
 public class ChristmasPromotionController {

@@ -5,6 +5,9 @@ import christmas.model.summary.PromotionSummary;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.Optional;
+
+import static christmas.constant.EventThreshold.PROMOTION_THRESHOLD;
 
 public class ChristmasPromotionService {
 
@@ -29,13 +32,13 @@ public class ChristmasPromotionService {
     }
 
     public PromotionSummary getPromotionSummary() {
-        DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
-        OrderDiscountDetails discountDetails = new OrderDiscountDetails(order.calculateTotalOrderAmount(), discountedItems);
-        return new PromotionSummary(discountedItems.discounts(), discountDetails.getTotalDiscountAmount(),
-                discountDetails.getFinalPaymentAmount(), discountDetails.getBadge());
+        if (order.calculateBaseOrderAmount() > PROMOTION_THRESHOLD.getAmount()) {
+            DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
+            OrderDiscountDetails discountDetails = new OrderDiscountDetails(order.calculateBaseOrderAmount(), discountedItems);
+            return new PromotionSummary(discountedItems.items(), discountDetails.getTotalDiscountAmount(),
+                    discountDetails.getFinalPaymentAmount(), Optional.ofNullable(discountDetails.getBadge()));
+        }
+        return new PromotionSummary(order.calculateBaseOrderAmount());
     }
 
 }
-    /* public boolean checkEventQualification() {
-        return order.getInitialOrderAmount() > 10000;
-    }**/

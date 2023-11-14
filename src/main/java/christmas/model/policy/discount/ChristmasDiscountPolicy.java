@@ -7,7 +7,7 @@ public class ChristmasDiscountPolicy implements DiscountPolicy {
 
     @Override
     public int calculateGiveawayItem(){
-        return (GIVEAWAY_ITEM.getStandardAmount())*-1;
+        return (GIVEAWAY_DISCOUNT.getStandardAmount())*-1;
     }
     
     @Override
