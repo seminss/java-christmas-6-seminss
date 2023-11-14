@@ -1,7 +1,6 @@
 package christmas.model;
 
-import christmas.model.menu.Menu;
-import christmas.model.order.Order;
+import christmas.config.Menu;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +29,7 @@ public class OrderTest {
                 Menu.BBQ_RIBS.getPrice()+
                 Menu.CHOCOLATE_CAKE.getPrice() * 2 +
                 Menu.CHAMPAGNE.getPrice();
-        Assertions.assertEquals(expectedAmount, order.getInitialOrderAmount());
+        Assertions.assertEquals(expectedAmount, order.calculateTotalOrderAmount());
     }
 
     @DisplayName("메인 메뉴 개수를 반환한다.")

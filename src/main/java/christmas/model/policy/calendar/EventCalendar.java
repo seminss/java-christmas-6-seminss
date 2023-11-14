@@ -1,4 +1,4 @@
-package christmas.model.calendar;
+package christmas.model.policy.calendar;
 
 import java.time.LocalDate;
 

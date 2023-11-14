@@ -2,7 +2,7 @@ package christmas.model.policy.discount;
 
 import christmas.config.Giveaway;
 
-public enum DiscountConfig {
+public enum DiscountSettings {
     DDAY_DISCOUNT("크리스마스 디데이 할인", 1000, 100),
     WEEKDAY_DISCOUNT("평일 할인", 0, 2023),
     WEEKEND_DISCOUNT("주말 할인", 0, 2023),
@@ -13,7 +13,7 @@ public enum DiscountConfig {
     private final int standardAmount;
     private final int increaseAmount;
 
-    DiscountConfig(String description, int standardAmount, int increaseAmount) {
+    DiscountSettings(String description, int standardAmount, int increaseAmount) {
         this.description = description;
         this.standardAmount = standardAmount;
         this.increaseAmount = increaseAmount;

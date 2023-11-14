@@ -5,14 +5,14 @@ import christmas.model.policy.calendar.EventCalendar;
 import christmas.model.policy.discount.ChristmasDiscountPolicy;
 import christmas.model.policy.discount.DiscountPolicy;
 import christmas.model.vo.DiscountAmount;
-import christmas.model.DiscountBenefits;
+import christmas.model.DiscountedItems;
 import christmas.model.Order;
 import christmas.model.VisitDate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static christmas.model.policy.discount.DiscountConfig.*;
+import static christmas.model.policy.discount.DiscountSettings.*;
 
 public class ChristmasDiscountCalculator {
 
@@ -25,17 +25,17 @@ public class ChristmasDiscountCalculator {
         this.discountPolicy = new ChristmasDiscountPolicy();
     }
 
-    public DiscountBenefits calculateDiscounts(VisitDate visitDate, Order order) {
+    public DiscountedItems calculateDiscounts(VisitDate visitDate, Order order) {
         List<DiscountAmount> discounts = new ArrayList<>();
         discounts.add(discountGiveaway(order));
         discounts.add(discountDDay(visitDate));
         discounts.add(discountSpecialDay(visitDate));
         if (isWeekday(visitDate)) {
             discounts.add(discountWeekDay(visitDate, order));
-            return new DiscountBenefits(discounts);
+            return new DiscountedItems(discounts);
         }
         discounts.add(discountWeekend(visitDate, order));
-        return new DiscountBenefits(discounts);
+        return new DiscountedItems(discounts);
     }
 
     private boolean isWeekday(VisitDate visitDate) {
@@ -77,7 +77,7 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountGiveaway(Order order) {
-        if (order.getInitialOrderAmount() > GIVEAWAY_THRESHOLD) {
+        if (order.calculateTotalOrderAmount() > GIVEAWAY_THRESHOLD) {
             int amount = discountPolicy.calculateGiveawayItem();
             return new DiscountAmount(GIVEAWAY_ITEM, amount);
         }

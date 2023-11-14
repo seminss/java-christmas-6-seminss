@@ -1,7 +1,7 @@
-package christmas.model.order;
+package christmas.model;
 
 import christmas.exception.business.InvalidOrderException;
-import christmas.constant.Menu;
+import christmas.config.Menu;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
@@ -9,12 +9,10 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.List;
 
-import static christmas.exception.ValidationErrorMessage.CAN_NOT_ONLY_DRINK;
 import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
 
 public class Order {
     private final EnumMap<Menu, Integer> orderedMenu;
-    private InitialOrderAmount initialOrderAmount;
 
     public Order(List<SimpleEntry<String, Integer>> readOrder) {
         validateDrinksOnly(readOrder);
@@ -28,7 +26,6 @@ public class Order {
             orderedMenu.put(menu, quantity);
         }
         validateTotalQuantity(orderedMenu.values());
-        calculateInitialOrderAmount();
     }
 
     public EnumMap<Menu, Integer> getOrderedMenu() {
@@ -56,8 +53,13 @@ public class Order {
         return dessertQuantity;
     }
 
-    public int getInitialOrderAmount() {
-        return initialOrderAmount.amount();
+    public int calculateTotalOrderAmount() {
+        int amount = 0;
+        for (Menu menu : Menu.values()) {
+            int quantity = orderedMenu.getOrDefault(menu, 0);
+            amount += quantity * menu.getPrice();
+        }
+        return amount;
     }
 
 
@@ -68,7 +70,7 @@ public class Order {
             categories.add(menu.getCategory());
         }
         if (categories.size() == 1 && categories.contains(Menu.Category.DRINK)) {
-            throw new InvalidOrderException(CAN_NOT_ONLY_DRINK.getMessage());
+            throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
 
@@ -90,7 +92,7 @@ public class Order {
                 .mapToInt(Integer::intValue)
                 .sum();
         if (totalQuantity > 20) {
-            throw new InvalidOrderException(CAN_NOT_ONLY_DRINK.getMessage());
+            throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
 
@@ -98,14 +100,5 @@ public class Order {
         if (orderedMenu.containsKey(menu)) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
-    }
-
-    private void calculateInitialOrderAmount() {
-        int amount = 0;
-        for (Menu menu : Menu.values()) {
-            int quantity = orderedMenu.getOrDefault(menu, 0);
-            amount += quantity * menu.getPrice();
-        }
-        initialOrderAmount = new InitialOrderAmount(amount);
     }
 }

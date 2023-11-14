@@ -1,7 +1,7 @@
 package christmas.service;
 
 import christmas.model.vo.DiscountAmount;
-import christmas.model.DiscountBenefits;
+import christmas.model.DiscountedItems;
 import christmas.model.Order;
 import christmas.model.VisitDate;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.AbstractMap;
 import java.util.List;
 
-import static christmas.model.policy.discount.DiscountConfig.*;
+import static christmas.model.policy.discount.DiscountSettings.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -28,8 +28,8 @@ class ChristmasDiscountCalculatorTest {
                         new AbstractMap.SimpleEntry<>("샴페인", 1)));
         ChristmasDiscountCalculator calculator = new ChristmasDiscountCalculator();
 
-        DiscountBenefits discountBenefits = calculator.calculateDiscounts(visitDate, order);
-        List<DiscountAmount> discounts = discountBenefits.getDiscounts();
+        DiscountedItems discountedItems = calculator.calculateDiscounts(visitDate, order);
+        List<DiscountAmount> discounts = discountedItems.discounts();
 
         System.out.println(discounts);
 

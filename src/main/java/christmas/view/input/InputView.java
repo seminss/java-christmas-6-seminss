@@ -6,7 +6,7 @@ import christmas.view.input.parser.OrderParser;
 import christmas.view.input.validator.OrderMenuValidator;
 import christmas.view.input.validator.VisitDateValidator;
 
-import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 
 public class InputView {
@@ -21,7 +21,7 @@ public class InputView {
         return VisitDateParser.parseInteger(userInput);
     }
 
-    public static List<AbstractMap.SimpleEntry<String, Integer>> readOrder(){
+    public static List<SimpleEntry<String, Integer>> readOrder(){ //TODO: 넘길 DTO 만들기
         String userInput = read();
         OrderMenuValidator.validate(userInput);
         return OrderParser.parseEachMenu(userInput);

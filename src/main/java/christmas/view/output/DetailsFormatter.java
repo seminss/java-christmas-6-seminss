@@ -1,9 +1,9 @@
 package christmas.view.output;
 
 import christmas.config.Menu;
-import christmas.model.DiscountBenefits;
+import christmas.model.DiscountedItems;
 import christmas.model.Order;
-import christmas.model.PromotionSummary;
+import christmas.model.summary.PromotionSummary;
 import christmas.model.VisitDate;
 
 import java.text.DecimalFormat;
@@ -15,9 +15,6 @@ public class DetailsFormatter {
     private final DecimalFormat df = new DecimalFormat(DATA_FORMAT.getValue());
     private static final String ONE_LINE = System.lineSeparator();
     private static final String TWO_LINE = ONE_LINE + ONE_LINE;
-
-    public DetailsFormatter(DiscountBenefits result) {
-    }
 
     public static DetailsFormatter visitDateFormatter(VisitDate date) {
         return new DetailsFormatter(date);
@@ -46,19 +43,21 @@ public class DetailsFormatter {
                     .append(TWO_LINE);
         }
         sb.append("<할인 전 총주문 금액>").append(ONE_LINE);
-        sb.append(df.format(order.getInitialOrderAmount())).append("원");
+        sb.append(df.format(order.calculateTotalOrderAmount())).append("원");
     }
 
     public DetailsFormatter(PromotionSummary summary) {
-        sb.append(ONE_LINE).append("<증정 메뉴>").append(ONE_LINE)
-                .append(summary.formattedGiveawayItem() + TWO_LINE).append("<혜택 내역>").append(ONE_LINE)
-                .append(summary.formattedDiscountDetails() + TWO_LINE)
+        sb.append(ONE_LINE)
+                .append("<증정 메뉴>" + ONE_LINE)
+                .append(summary.giveawayItemDetails() + TWO_LINE)
+                .append("<혜택 내역>" + ONE_LINE)
+                .append(summary.discountDetails() + TWO_LINE)
                 .append("<총혜택 금액>" + ONE_LINE)
-                .append(summary.formattedTotalDiscount() + TWO_LINE)
+                .append(summary.totalDiscountDetails() + TWO_LINE)
                 .append("<할인 후 예상 결제 금액>" + ONE_LINE)
-                .append(summary.formattedFinalPaymentAmount() + TWO_LINE)
+                .append(summary.finalPaymentAmountDetails() + TWO_LINE)
                 .append("<12월 이벤트 배지>" + ONE_LINE)
-                .append(summary.formattedEventBadge());
+                .append(summary.eventBadgeDetails());
     }
 
     @Override

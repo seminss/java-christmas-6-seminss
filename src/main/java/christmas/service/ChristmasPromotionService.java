@@ -1,6 +1,7 @@
 package christmas.service;
 
 import christmas.model.*;
+import christmas.model.summary.PromotionSummary;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
@@ -23,20 +24,19 @@ public class ChristmasPromotionService {
         return order;
     }
 
-    public PromotionSummary getPromotionSummary() {
-        DiscountBenefits benefits = discountCalculator.calculateDiscounts(visitDate, order);
-        DiscountResult result = new DiscountResult(order.getInitialOrderAmount(), benefits);
-        return new PromotionSummary(benefits.getDiscounts(), result.getTotalDiscountAMount(),
-                result.getFinalPaymentAmount(), result.getBadge());
-    }
-
     public VisitDate getVisitDate() {
         return visitDate;
+    }
+
+    public PromotionSummary getPromotionSummary() {
+        DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
+        OrderDiscountDetails discountDetails = new OrderDiscountDetails(order.calculateTotalOrderAmount(), discountedItems);
+        return new PromotionSummary(discountedItems.discounts(), discountDetails.getTotalDiscountAmount(),
+                discountDetails.getFinalPaymentAmount(), discountDetails.getBadge());
     }
 
     /* public boolean checkEventQualification() {
         return order.getInitialOrderAmount() > 10000;
     }**/
-
 
 }

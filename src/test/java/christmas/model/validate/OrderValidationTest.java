@@ -1,7 +1,7 @@
 package christmas.model.validate;
 
 import christmas.exception.business.InvalidOrderException;
-import christmas.model.order.Order;
+import christmas.model.Order;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

@@ -22,6 +22,10 @@ public class ChristmasPromotionController {
         service.createOrder(readOrder);
     }
 
+    public DetailsFormatter formatVisitDate() {
+        return DetailsFormatter.visitDateFormatter(service.getVisitDate());
+    }
+
     public DetailsFormatter formatOrder() {
         return DetailsFormatter.OrderFormatter(service.getOrder());
     }
@@ -30,7 +34,4 @@ public class ChristmasPromotionController {
         return DetailsFormatter.DiscountResultFormatter(service.getPromotionSummary());
     }
 
-    public DetailsFormatter formatVisitDate() {
-        return DetailsFormatter.visitDateFormatter(service.getVisitDate());
-    }
 }

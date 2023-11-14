@@ -27,10 +27,6 @@ public class OutputView {
         printMessage(orderMessage.toString());
     }
 
-    private static void printMessage() {
-        System.out.println();
-    }
-
     private static void printMessage(String message) {
         System.out.println(message);
     }

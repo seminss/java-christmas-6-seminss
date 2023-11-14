@@ -1,6 +1,6 @@
-package christmas.model.menu;
+package christmas.config;
 
-import static christmas.model.menu.Menu.Category.*;
+import static christmas.config.Menu.Category.*;
 
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", 6_000, APPETIZER),
@@ -15,7 +15,6 @@ public enum Menu {
     ZERO_COLA("제로콜라", 3_000, DRINK),
     RED_WINE("레드와인", 60_000, DRINK),
     CHAMPAGNE("샴페인", 25_000, DRINK),
-
     NONE("잘못된메뉴", 0, INVALID);
 
     private final String name;
