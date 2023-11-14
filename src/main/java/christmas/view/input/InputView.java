@@ -8,20 +8,27 @@ import christmas.view.input.validator.VisitDateValidator;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class InputView {
 
-    private InputView() {
-
+    public static <T> T getValidInput(Supplier<T> inputSupplier) {
+        while (true) {
+            try {
+                return inputSupplier.get();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    public static Integer readVisitDate(){
+    public static Integer readVisitDate() {
         String userInput = read();
         VisitDateValidator.validate(userInput);
         return VisitDateParser.parseInteger(userInput);
     }
 
-    public static List<SimpleEntry<String, Integer>> readOrder(){ //TODO: 넘길 DTO 만들기
+    public static List<SimpleEntry<String, Integer>> readOrder() { //TODO: 넘길 DTO 만들기
         String userInput = read();
         OrderMenuValidator.validate(userInput);
         return OrderParser.parseEachMenu(userInput);
@@ -34,6 +41,4 @@ public class InputView {
     private static String read() {
         return Console.readLine();
     }
-
-
 }
