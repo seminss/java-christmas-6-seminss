@@ -36,13 +36,9 @@ public class ChristmasPromotionService {
     public PromotionSummary getPromotionSummary() {
         if (canReceivePromotion()) {
             DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
-            OrderDiscountDetails discountDetails = new OrderDiscountDetails(
-                    order.getBaseOrderAmount(), discountedItems
-            );
-            return new PromotionSummary(
-                    discountedItems.items(), discountDetails.getTotalDiscountAmount(),
-                    discountDetails.getFinalPaymentAmount(), Optional.ofNullable(discountDetails.getBadge())
-            );
+            DiscountResults discountResults = new DiscountResults(order.getBaseOrderAmount(), discountedItems);
+            return new PromotionSummary(discountedItems.items(), discountResults.getTotalDiscountAmount(),
+                    discountResults.getFinalPaymentAmount(), Optional.ofNullable(discountResults.getBadge()));
         }
         return new PromotionSummary(order.getBaseOrderAmount());
     }

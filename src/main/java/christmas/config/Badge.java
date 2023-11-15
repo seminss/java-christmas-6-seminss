@@ -23,7 +23,7 @@ public enum Badge {
 
     public static Badge of(int totalDiscountAmount) {
         for (Badge badge : Badge.values()) {
-            if (totalDiscountAmount >= badge.getThreshold()) {
+            if (Math.negateExact(totalDiscountAmount) >= badge.getThreshold()) {
                 return badge;
             }
         }

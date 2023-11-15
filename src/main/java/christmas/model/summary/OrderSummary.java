@@ -21,11 +21,11 @@ public class OrderSummary {
     }
 
     public String getBaseOrderAmountDetails() {
-        return this.orderDetails;
+        return this.baseOrderAmount;
     }
 
     public String getOrderDetails() {
-        return this.baseOrderAmount;
+        return this.orderDetails;
     }
 
     private void initOrderDetails(Order order) {

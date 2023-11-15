@@ -65,7 +65,7 @@ public final class PromotionSummary {
 
     private void initGiveawayItemDetails(List<DiscountAmount> discounts) {
         this.giveawayDetails = discounts.stream()
-                .filter(d -> d.discountSettings() == GIVEAWAY_DISCOUNT && d.amount() > NO_DISCOUNT_THRESHOLD)
+                .filter(d -> d.discountSettings() == GIVEAWAY_DISCOUNT && d.amount() < NO_DISCOUNT_THRESHOLD)
                 .findFirst()
                 .map(d -> String.format(GIVEAWAY_FORMAT, GIVEAWAY_ITEM.getName(), GIVEAWAY_ITEM.getQuantity()))
                 .orElse(DEFAULT_MESSAGE);
