@@ -8,19 +8,8 @@ import christmas.view.input.validator.VisitDateValidator;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class InputView {
-
-    public static <T> T getValidInput(Supplier<T> inputSupplier) {
-        while (true) {
-            try {
-                return inputSupplier.get();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
 
     public static Integer readVisitDate() {
         String userInput = read();

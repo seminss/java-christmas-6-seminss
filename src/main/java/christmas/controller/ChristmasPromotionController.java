@@ -5,6 +5,9 @@ import christmas.view.input.InputView;
 import christmas.view.output.DetailsFormatter;
 import christmas.view.output.OutputView;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
+
 public class ChristmasPromotionController {
     private final ChristmasPromotionService service;
 
@@ -12,27 +15,34 @@ public class ChristmasPromotionController {
         service = new ChristmasPromotionService();
     }
 
-    public void run() {
+    public void start() {
         takeVisitDate();
         takeOrder();
         previewEventBenefits();
     }
 
     private void takeVisitDate() {
-        OutputView.printIntroductionMessage();
-        OutputView.printTakeDateMessage();
-        service.setVisitDate(InputView.getValidInput(InputView::readVisitDate));
+        run(() -> {
+            OutputView.printIntroductionMessage();
+            OutputView.printTakeDateMessage();
+            Integer visitDate = InputView.readVisitDate();
+            service.setVisitDate(visitDate);
+        });
     }
 
     private void takeOrder() {
-        OutputView.printTakeOrderMessage();
-        service.setOrder(InputView.getValidInput(InputView::readOrder));
+        run(() -> {
+            OutputView.printTakeOrderMessage();
+            List<SimpleEntry<String, Integer>> order = InputView.readOrder();
+            service.setOrder(order);
+        });
     }
 
     private void previewEventBenefits() {
         OutputView.printMessage(formatVisitDate());
         OutputView.printMessage(formatOrder());
         OutputView.printMessage(formatDiscountResult());
+        InputView.readClose();
     }
 
     private DetailsFormatter formatVisitDate() {
@@ -45,5 +55,16 @@ public class ChristmasPromotionController {
 
     private DetailsFormatter formatDiscountResult() {
         return DetailsFormatter.DiscountResultFormatter(service.getPromotionSummary());
+    }
+
+    private void run(Runnable inputRunnable) {
+        while (true) {
+            try {
+                inputRunnable.run();
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printMessage(e.getMessage());
+            }
+        }
     }
 }
