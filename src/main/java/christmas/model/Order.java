@@ -33,7 +33,6 @@ public class Order {
         return orderedMenu;
     }
 
-
     public int getMainQuantity() {
         int mainQuantity = 0;
         for (Menu menu : orderedMenu.keySet()) {
@@ -54,7 +53,7 @@ public class Order {
         return dessertQuantity;
     }
 
-    public int calculateBaseOrderAmount() {
+    public int getBaseOrderAmount() {
         int amount = 0;
         for (Menu menu : Menu.values()) {
             int quantity = orderedMenu.getOrDefault(menu, 0);

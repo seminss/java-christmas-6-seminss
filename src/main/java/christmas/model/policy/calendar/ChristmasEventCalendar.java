@@ -4,10 +4,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 
+import static java.time.LocalDate.now;
+
 public class ChristmasEventCalendar extends EventCalendar {
 
-    private final LocalDate christmasDay = LocalDate.of(2023, Month.DECEMBER, 25);
-    private final SpecialDays specialDays = new SpecialDays();
+    private final LocalDate christmasDate = LocalDate.of(now().getYear(), Month.DECEMBER, 25);
+    private final ChristmasSpecialDays specialDates = new ChristmasSpecialDays();
 
     @Override
     public boolean isWeekday(LocalDate date) {
@@ -23,16 +25,11 @@ public class ChristmasEventCalendar extends EventCalendar {
 
     @Override
     public boolean isSpecialDiscountDay(LocalDate date) {
-        return specialDays.contains(date);
+        return specialDates.contains(date);
     }
 
     @Override
     public boolean isDDayDiscountDay(LocalDate date) {
-        return date.getDayOfMonth() <= christmasDay.getDayOfMonth();
-    }
-
-    @Override
-    public int remainUntilDDay(LocalDate date) {
-        return christmasDay.getDayOfMonth() - date.getDayOfMonth();
+        return !date.isAfter(christmasDate);
     }
 }

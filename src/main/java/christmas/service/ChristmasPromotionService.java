@@ -26,7 +26,7 @@ public class ChristmasPromotionService {
     }
 
     public OrderSummary getOrderSummary() {
-         return new OrderSummary(order);
+        return new OrderSummary(order);
     }
 
     public VisitDateSummary getVisitDateSummary() {
@@ -34,13 +34,21 @@ public class ChristmasPromotionService {
     }
 
     public PromotionSummary getPromotionSummary() {
-        if (order.calculateBaseOrderAmount() > PROMOTION_THRESHOLD.getAmount()) {
+        if (canReceivePromotion()) {
             DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
-            OrderDiscountDetails discountDetails = new OrderDiscountDetails(order.calculateBaseOrderAmount(), discountedItems);
-            return new PromotionSummary(discountedItems.items(), discountDetails.getTotalDiscountAmount(),
-                    discountDetails.getFinalPaymentAmount(), Optional.ofNullable(discountDetails.getBadge()));
+            OrderDiscountDetails discountDetails = new OrderDiscountDetails(
+                    order.getBaseOrderAmount(), discountedItems
+            );
+            return new PromotionSummary(
+                    discountedItems.items(), discountDetails.getTotalDiscountAmount(),
+                    discountDetails.getFinalPaymentAmount(), Optional.ofNullable(discountDetails.getBadge())
+            );
         }
-        return new PromotionSummary(order.calculateBaseOrderAmount());
+        return new PromotionSummary(order.getBaseOrderAmount());
+    }
+
+    private boolean canReceivePromotion() {
+        return order.getBaseOrderAmount() > PROMOTION_THRESHOLD.getAmount();
     }
 
 }

@@ -35,6 +35,6 @@ public class OrderSummary {
     }
 
     private void initBaseOrderAmountDetails(Order order) {
-        this.baseOrderAmount = df.format(order.calculateBaseOrderAmount());
+        this.baseOrderAmount = df.format(order.getBaseOrderAmount());
     }
 }
