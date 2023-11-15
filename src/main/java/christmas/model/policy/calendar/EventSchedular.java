@@ -2,7 +2,7 @@ package christmas.model.policy.calendar;
 
 import java.time.LocalDate;
 
-public abstract class EventCalendar {
+public abstract class EventSchedular {
     public abstract boolean isWeekday(LocalDate date);
 
     public abstract boolean isWeekend(LocalDate date);

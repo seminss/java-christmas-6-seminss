@@ -6,7 +6,7 @@ import java.time.Month;
 
 import static java.time.LocalDate.now;
 
-public class ChristmasEventSchedular extends EventCalendar {
+public class ChristmasEventSchedular extends EventSchedular {
 
     private final LocalDate christmasDate = LocalDate.of(now().getYear(), Month.DECEMBER, 25);
     private final ChristmasSpecialDayEvaluator specialDates = new ChristmasSpecialDayEvaluator();

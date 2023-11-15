@@ -1,7 +1,7 @@
 package christmas.service;
 
 import christmas.model.policy.calendar.ChristmasEventSchedular;
-import christmas.model.policy.calendar.EventCalendar;
+import christmas.model.policy.calendar.EventSchedular;
 import christmas.model.policy.discount.ChristmasDiscountPolicy;
 import christmas.model.policy.discount.DiscountPolicy;
 import christmas.model.vo.DiscountAmount;
@@ -16,11 +16,11 @@ import static christmas.constant.EventThreshold.GIVEAWAY_THRESHOLD;
 import static christmas.model.policy.discount.DiscountSettings.*;
 
 public class ChristmasDiscountCalculator {
-    private final EventCalendar eventCalendar;
+    private final EventSchedular eventSchedular;
     private final DiscountPolicy discountPolicy;
 
     public ChristmasDiscountCalculator() {
-        this.eventCalendar = new ChristmasEventSchedular();
+        this.eventSchedular = new ChristmasEventSchedular();
         this.discountPolicy = new ChristmasDiscountPolicy();
     }
 
@@ -38,11 +38,11 @@ public class ChristmasDiscountCalculator {
     }
 
     private boolean isWeekday(VisitDate visitDate) {
-        return eventCalendar.isWeekday(visitDate.getDate());
+        return eventSchedular.isWeekday(visitDate.getDate());
     }
 
     private DiscountAmount discountSpecialDay(VisitDate visitDate) {
-        if (eventCalendar.isSpecialDiscountDay(visitDate.getDate())) {
+        if (eventSchedular.isSpecialDiscountDay(visitDate.getDate())) {
             int amount = discountPolicy.calculateSpecialDiscountPrice();
             return new DiscountAmount(SPECIAL_DISCOUNT, amount);
         }
@@ -50,7 +50,7 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountWeekend(VisitDate visitDate, Order order) {
-        if (eventCalendar.isWeekend(visitDate.getDate())) {
+        if (eventSchedular.isWeekend(visitDate.getDate())) {
             int mainQuantity = order.getMainQuantity();
             int amount = discountPolicy.calculateWeekendDiscountPrice(mainQuantity);
             return new DiscountAmount(WEEKEND_DISCOUNT, amount);
@@ -68,7 +68,7 @@ public class ChristmasDiscountCalculator {
     }
 
     private DiscountAmount discountDDay(VisitDate visitDate) {
-        if (eventCalendar.isDDayDiscountDay(visitDate.getDate())) {
+        if (eventSchedular.isDDayDiscountDay(visitDate.getDate())) {
             int amount = discountPolicy.calculateDDayDiscountPrice(visitDate.getDate().getDayOfMonth());
             return new DiscountAmount(DDAY_DISCOUNT, amount);
         }

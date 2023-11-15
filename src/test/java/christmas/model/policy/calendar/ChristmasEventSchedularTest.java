@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 class ChristmasEventSchedularTest {
 
-    EventCalendar eventCalendar = new ChristmasEventSchedular();
+    EventSchedular eventSchedular = new ChristmasEventSchedular();
 
     private static Stream<LocalDate> provideWeekdays() {
         return Stream.of(
@@ -34,48 +34,48 @@ class ChristmasEventSchedularTest {
     @MethodSource("provideWeekdays")
     @ParameterizedTest
     void isWeekdaySuccessTest(LocalDate date) {
-        Assertions.assertTrue(eventCalendar.isWeekday(date));
+        Assertions.assertTrue(eventSchedular.isWeekday(date));
     }
 
     @DisplayName("금,토은 평일이 아니다.")
     @MethodSource("provideWeekends")
     @ParameterizedTest
     void isWeekdayFailTest(LocalDate date) {
-        Assertions.assertFalse(eventCalendar.isWeekday(date));
+        Assertions.assertFalse(eventSchedular.isWeekday(date));
     }
 
     @DisplayName("금,토는 주말이다.")
     @MethodSource("provideWeekends")
     @ParameterizedTest
     void isWeekendSuccessTest(LocalDate date) {
-        Assertions.assertTrue(eventCalendar.isWeekend(date));
+        Assertions.assertTrue(eventSchedular.isWeekend(date));
     }
 
     @DisplayName("일,월,화,수,목은 주말이 아니다.")
     @MethodSource("provideWeekdays")
     @ParameterizedTest
     void isWeekendFailTest(LocalDate date) {
-        Assertions.assertFalse(eventCalendar.isWeekend(date));
+        Assertions.assertFalse(eventSchedular.isWeekend(date));
     }
 
     @DisplayName("1일부터 25일까지 D-Day 할인을 받을 수 있다.")
     @Test
     void isDDayDiscountDaySuccessTest() {
         LocalDate date = LocalDate.of(2023, Month.DECEMBER, 25);
-        Assertions.assertTrue(eventCalendar.isDDayDiscountDay(date));
+        Assertions.assertTrue(eventSchedular.isDDayDiscountDay(date));
     }
 
     @DisplayName("26일 부터는 D-Day 할인을 받을 수 없다.")
     @Test
     void isDDayDiscountDayFailTest() {
         LocalDate date = LocalDate.of(2023, Month.DECEMBER, 26);
-        Assertions.assertFalse(eventCalendar.isDDayDiscountDay(date));
+        Assertions.assertFalse(eventSchedular.isDDayDiscountDay(date));
     }
 
     @DisplayName("ChristmasSpecialDayEvaluator에서 판단한 결과가 그대로 적용 된다.")
     @Test
     void containSuccessTest() {
         LocalDate date = LocalDate.of(2023, Month.DECEMBER, 17);
-        Assertions.assertTrue(eventCalendar.isSpecialDiscountDay(date));
+        Assertions.assertTrue(eventSchedular.isSpecialDiscountDay(date));
     }
 }
