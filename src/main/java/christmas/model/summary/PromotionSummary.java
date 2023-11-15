@@ -29,8 +29,8 @@ public final class PromotionSummary {
     public PromotionSummary(int finalPaymentAmount) {
         this.discountDetails = DEFAULT_MESSAGE;
         this.giveawayDetails = DEFAULT_MESSAGE;
-        this.totalDiscountAmountDetails = df.format(0);
-        this.finalPaymentAmountDetails = df.format(finalPaymentAmount);
+        initTotalDiscountDetails(NO_DISCOUNT_THRESHOLD);
+        initFinalPaymentAmountDetails(finalPaymentAmount);
         this.eventBadgeDetails = DEFAULT_MESSAGE;
     }
 
@@ -67,7 +67,7 @@ public final class PromotionSummary {
         this.giveawayDetails = discounts.stream()
                 .filter(d -> d.discountSettings() == GIVEAWAY_DISCOUNT && d.amount() > NO_DISCOUNT_THRESHOLD)
                 .findFirst()
-                .map(d -> String.format(GIVEAWAY_FORMAT, GIVEAWAY_ITEM.getName(), GIVEAWAY_ITEM.getPrice()))
+                .map(d -> String.format(GIVEAWAY_FORMAT, GIVEAWAY_ITEM.getName(), GIVEAWAY_ITEM.getQuantity()))
                 .orElse(DEFAULT_MESSAGE);
     }
 
