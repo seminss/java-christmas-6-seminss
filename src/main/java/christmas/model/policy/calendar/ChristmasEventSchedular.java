@@ -6,10 +6,10 @@ import java.time.Month;
 
 import static java.time.LocalDate.now;
 
-public class ChristmasEventCalendar extends EventCalendar {
+public class ChristmasEventSchedular extends EventCalendar {
 
     private final LocalDate christmasDate = LocalDate.of(now().getYear(), Month.DECEMBER, 25);
-    private final ChristmasSpecialDays specialDates = new ChristmasSpecialDays();
+    private final ChristmasSpecialDayEvaluator specialDates = new ChristmasSpecialDayEvaluator();
 
     @Override
     public boolean isWeekday(LocalDate date) {
