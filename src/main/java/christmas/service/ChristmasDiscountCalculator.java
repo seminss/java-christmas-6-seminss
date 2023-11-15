@@ -1,6 +1,6 @@
 package christmas.service;
 
-import christmas.model.policy.calendar.ChristmasEventCalendar;
+import christmas.model.policy.calendar.ChristmasEventSchedular;
 import christmas.model.policy.calendar.EventCalendar;
 import christmas.model.policy.discount.ChristmasDiscountPolicy;
 import christmas.model.policy.discount.DiscountPolicy;
@@ -20,7 +20,7 @@ public class ChristmasDiscountCalculator {
     private final DiscountPolicy discountPolicy;
 
     public ChristmasDiscountCalculator() {
-        this.eventCalendar = new ChristmasEventCalendar();
+        this.eventCalendar = new ChristmasEventSchedular();
         this.discountPolicy = new ChristmasDiscountPolicy();
     }
 
