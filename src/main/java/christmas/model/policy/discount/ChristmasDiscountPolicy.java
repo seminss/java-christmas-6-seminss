@@ -6,28 +6,28 @@ public class ChristmasDiscountPolicy implements DiscountPolicy {
     static int EVENT_START_DAY = 1;
 
     @Override
-    public int calculateGiveawayItem(){
-        return (GIVEAWAY_DISCOUNT.getStandardAmount())*-1;
+    public int calculateGiveawayItem() {
+        return Math.negateExact(GIVEAWAY_DISCOUNT.getStandardAmount());
     }
-    
+
     @Override
     public int calculateDDayDiscountPrice(int visitDay) {
-        return (DDAY_DISCOUNT.getStandardAmount()
-                + (visitDay - EVENT_START_DAY) * DDAY_DISCOUNT.getIncreaseAmount()) * -1;
+        return Math.negateExact(DDAY_DISCOUNT.getStandardAmount()
+                + (visitDay - EVENT_START_DAY) * DDAY_DISCOUNT.getIncreaseAmount());
     }
 
     @Override
     public int calculateWeekdayDiscountPrice(int dessertQuantity) {
-        return (WEEKDAY_DISCOUNT.getIncreaseAmount() * dessertQuantity) * -1;
+        return Math.negateExact(WEEKDAY_DISCOUNT.getIncreaseAmount() * dessertQuantity);
     }
 
     @Override
     public int calculateWeekendDiscountPrice(int mainQuantity) {
-        return (WEEKEND_DISCOUNT.getIncreaseAmount() * mainQuantity) * -1;
+        return Math.negateExact(WEEKEND_DISCOUNT.getIncreaseAmount() * mainQuantity);
     }
 
     @Override
     public int calculateSpecialDiscountPrice() {
-        return (SPECIAL_DISCOUNT.getStandardAmount()) * -1;
+        return Math.negateExact(SPECIAL_DISCOUNT.getStandardAmount());
     }
 }
