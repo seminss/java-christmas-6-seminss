@@ -10,12 +10,12 @@ import static java.time.DayOfWeek.SUNDAY;
 import static java.time.LocalDate.now;
 import static java.time.Month.DECEMBER;
 
-public class ChristmasSpecialDays {
+public class ChristmasSpecialDayEvaluator {
     private static final LocalDate christmasDate = LocalDate.of(now().getYear(), Month.DECEMBER, 25);
     private static final LocalDate startDateOfDecember = LocalDate.of(now().getYear(), Month.DECEMBER, 1);
     private final Set<LocalDate> specialDays;
 
-    public ChristmasSpecialDays() {
+    public ChristmasSpecialDayEvaluator() {
         this.specialDays = initializeSpecialDays();
     }
 
@@ -23,7 +23,7 @@ public class ChristmasSpecialDays {
         return specialDays.contains(date);
     }
 
-    public static Set<LocalDate> initializeSpecialDays() {
+    private static Set<LocalDate> initializeSpecialDays() {
         Set<LocalDate> specialDays = new HashSet<>();
         //12월의 모든 일요일을 스페셜 데이에 추가
         LocalDate date = startDateOfDecember.with(TemporalAdjusters.firstInMonth(SUNDAY));
