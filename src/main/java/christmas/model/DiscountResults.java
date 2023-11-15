@@ -5,15 +5,15 @@ import christmas.model.vo.DiscountAmount;
 
 import static christmas.model.policy.discount.DiscountSettings.GIVEAWAY_DISCOUNT;
 
-public class OrderDiscountDetails {
+public class DiscountResults {
     private final int totalDiscountAmount;
     private final int finalPaymentAmount;
     private final Badge badge;
 
-    public OrderDiscountDetails(int baseOrderAmount, DiscountedItems discountedItems) {
+    public DiscountResults(int baseOrderAmount, DiscountedItems discountedItems) {
         this.totalDiscountAmount = calculateTotalDiscount(discountedItems);
         this.finalPaymentAmount = baseOrderAmount + calculateTotalDiscountExcludingGiveaway(discountedItems);
-        this.badge = initializeBadge();
+        this.badge = Badge.of(totalDiscountAmount);
     }
 
     public int getTotalDiscountAmount() {
@@ -40,14 +40,5 @@ public class OrderDiscountDetails {
             }
         }
         return totalDiscount;
-    }
-
-    private Badge initializeBadge() {
-        for (Badge badge : Badge.values()) {
-            if (totalDiscountAmount > badge.getThreshold()) {
-                return badge;
-            }
-        }
-        return null;
     }
 }

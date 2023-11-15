@@ -1,9 +1,9 @@
 package christmas.config;
 
 public enum Badge {
-    SANTA("산타",20_000),
-    TREE("트리",10_000),
-    STAR("별",5_000);
+    SANTA("산타", 20_000),
+    TREE("트리", 10_000),
+    STAR("별", 5_000);
 
     private final String name;
     private final int threshold;
@@ -19,5 +19,14 @@ public enum Badge {
 
     public int getThreshold() {
         return threshold;
+    }
+
+    public static Badge of(int totalDiscountAmount) {
+        for (Badge badge : Badge.values()) {
+            if (totalDiscountAmount >= badge.getThreshold()) {
+                return badge;
+            }
+        }
+        return null;
     }
 }
