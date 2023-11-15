@@ -30,9 +30,9 @@ public class ChristmasPromotionController {
     }
 
     private void previewEventBenefits() {
-        OutputView.printPromotionPreviewMessage(formatVisitDate());
-        OutputView.printFormattedOrderMessage(formatOrder());
-        OutputView.printFormattedDiscountResultMessage(formatDiscountResult());
+        OutputView.printMessage(formatVisitDate());
+        OutputView.printMessage(formatOrder());
+        OutputView.printMessage(formatDiscountResult());
     }
 
     private DetailsFormatter formatVisitDate() {

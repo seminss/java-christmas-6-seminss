@@ -9,18 +9,6 @@ import static christmas.view.output.PromptMessage.*;
 public class DetailsFormatter {
     private final StringBuilder sb = new StringBuilder();
 
-    public static DetailsFormatter visitDateFormatter(VisitDateSummary summary) {
-        return new DetailsFormatter(summary);
-    }
-
-    public static DetailsFormatter OrderFormatter(OrderSummary summary) {
-        return new DetailsFormatter(summary);
-    }
-
-    public static DetailsFormatter DiscountResultFormatter(PromotionSummary summary) {
-        return new DetailsFormatter(summary);
-    }
-
     public DetailsFormatter(VisitDateSummary summary) {
         appendLine(summary.getVisitDateDetails());
     }
@@ -43,6 +31,18 @@ public class DetailsFormatter {
                 .appendLine(summary.getFinalPaymentAmountDetails(), 2)
                 .appendLine(EVENT_BADGE_HEADER.getMessage())
                 .append(summary.getEventBadgeDetails());
+    }
+
+    public static DetailsFormatter visitDateFormatter(VisitDateSummary summary) {
+        return new DetailsFormatter(summary);
+    }
+
+    public static DetailsFormatter OrderFormatter(OrderSummary summary) {
+        return new DetailsFormatter(summary);
+    }
+
+    public static DetailsFormatter DiscountResultFormatter(PromotionSummary summary) {
+        return new DetailsFormatter(summary);
     }
 
     private DetailsFormatter append(String text) {

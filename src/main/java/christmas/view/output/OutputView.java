@@ -15,16 +15,8 @@ public class OutputView {
         printMessage(TAKE_VISIT_DATE_MESSAGE.getMessage());
     }
 
-    public static void printPromotionPreviewMessage(DetailsFormatter visitDateMessage) {
-        printMessage(visitDateMessage.toString());
-    }
-
-    public static void printFormattedDiscountResultMessage(DetailsFormatter discountResultMessage) {
-        printMessage(discountResultMessage.toString());
-    }
-
-    public static void printFormattedOrderMessage(DetailsFormatter orderMessage) {
-        printMessage(orderMessage.toString());
+    public static void printMessage(DetailsFormatter detailsFormatter) {
+        printMessage(detailsFormatter.toString());
     }
 
     private static void printMessage(String message) {
