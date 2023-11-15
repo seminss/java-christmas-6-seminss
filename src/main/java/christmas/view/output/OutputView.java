@@ -4,15 +4,15 @@ import static christmas.view.output.PromptMessage.*;
 
 public class OutputView {
     public static void printIntroductionMessage() {
-        printMessage(INTRODUCTION.getMessage());
+        printMessage(INTRODUCTION_MESSAGE.getMessage());
     }
 
     public static void printTakeOrderMessage() {
-        printMessage(TAKE_ORDER.getMessage());
+        printMessage(TAKE_ORDER_MESSAGE.getMessage());
     }
 
     public static void printTakeDateMessage() {
-        printMessage(TAKE_VISIT_DATE.getMessage());
+        printMessage(TAKE_VISIT_DATE_MESSAGE.getMessage());
     }
 
     public static void printPromotionPreviewMessage(DetailsFormatter visitDateMessage) {
@@ -25,10 +25,6 @@ public class OutputView {
 
     public static void printFormattedOrderMessage(DetailsFormatter orderMessage) {
         printMessage(orderMessage.toString());
-    }
-
-    public static void printErrorMessage(String message) {
-        printMessage(message);
     }
 
     private static void printMessage(String message) {

@@ -79,7 +79,7 @@ public final class PromotionSummary {
         this.discountDetails = discounts.stream()
                 .filter(d -> d.amount() < NO_DISCOUNT_THRESHOLD)
                 .map(this::formatDiscountDetail)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     private void initEventBadgeDetails(Optional<Badge> eventBadge) {

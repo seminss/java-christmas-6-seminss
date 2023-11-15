@@ -1,7 +1,9 @@
 package christmas.service;
 
 import christmas.model.*;
+import christmas.model.summary.OrderSummary;
 import christmas.model.summary.PromotionSummary;
+import christmas.model.summary.VisitDateSummary;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
@@ -23,12 +25,12 @@ public class ChristmasPromotionService {
         order = new Order(readOrder);
     }
 
-    public Order getOrder() {
-        return order;
+    public OrderSummary getOrderSummary() {
+         return new OrderSummary(order);
     }
 
-    public VisitDate getVisitDate() {
-        return visitDate;
+    public VisitDateSummary getVisitDateSummary() {
+        return new VisitDateSummary(visitDate);
     }
 
     public PromotionSummary getPromotionSummary() {

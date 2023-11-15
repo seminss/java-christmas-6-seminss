@@ -28,7 +28,7 @@ public class InputView {
         return VisitDateParser.parseInteger(userInput);
     }
 
-    public static List<SimpleEntry<String, Integer>> readOrder() { //TODO: 넘길 DTO 만들기
+    public static List<SimpleEntry<String, Integer>> readOrder() {
         String userInput = read();
         OrderMenuValidator.validate(userInput);
         return OrderParser.parseEachMenu(userInput);

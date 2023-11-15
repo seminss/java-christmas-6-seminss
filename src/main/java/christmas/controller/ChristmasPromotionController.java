@@ -36,11 +36,11 @@ public class ChristmasPromotionController {
     }
 
     private DetailsFormatter formatVisitDate() {
-        return DetailsFormatter.visitDateFormatter(service.getVisitDate());
+        return DetailsFormatter.visitDateFormatter(service.getVisitDateSummary());
     }
 
     private DetailsFormatter formatOrder() {
-        return DetailsFormatter.OrderFormatter(service.getOrder());
+        return DetailsFormatter.OrderFormatter(service.getOrderSummary());
     }
 
     private DetailsFormatter formatDiscountResult() {
