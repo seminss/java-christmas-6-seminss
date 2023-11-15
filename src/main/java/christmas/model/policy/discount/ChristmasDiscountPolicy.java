@@ -3,7 +3,7 @@ package christmas.model.policy.discount;
 import static christmas.model.policy.discount.DiscountSettings.*;
 
 public class ChristmasDiscountPolicy implements DiscountPolicy {
-    static int EVENT_START_DAY = 1;
+    static final int EVENT_START_DAY = 1;
 
     @Override
     public int calculateGiveawayItem() {

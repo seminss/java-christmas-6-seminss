@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 class ChristmasEventSchedularTest {
 
-    EventSchedular eventSchedular = new ChristmasEventSchedular();
+    private final EventSchedular eventSchedular = new ChristmasEventSchedular();
 
     private static Stream<LocalDate> provideWeekdays() {
         return Stream.of(

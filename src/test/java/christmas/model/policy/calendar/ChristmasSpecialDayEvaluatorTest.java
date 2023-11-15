@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 class ChristmasSpecialDayEvaluatorTest {
 
-    ChristmasSpecialDayEvaluator evaluator = new ChristmasSpecialDayEvaluator();
+    private final ChristmasSpecialDayEvaluator evaluator = new ChristmasSpecialDayEvaluator();
 
     private static Stream<LocalDate> provideSpecialDays() {
         return Stream.of(
