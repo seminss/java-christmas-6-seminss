@@ -42,7 +42,12 @@ public class DetailsFormatter {
                 .appendLine(FINAL_PAYMENT_AMOUNT_HEADER.getMessage())
                 .appendLine(summary.getFinalPaymentAmountDetails(), 2)
                 .appendLine(EVENT_BADGE_HEADER.getMessage())
-                .appendLine(summary.getEventBadgeDetails());
+                .append(summary.getEventBadgeDetails());
+    }
+
+    private DetailsFormatter append(String text) {
+        sb.append(text);
+        return this;
     }
 
     private DetailsFormatter appendLine(String text) {

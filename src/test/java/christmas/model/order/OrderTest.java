@@ -1,6 +1,7 @@
-package christmas.model;
+package christmas.model.order;
 
 import christmas.config.Menu;
+import christmas.model.Order;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package christmas.model.validate;
+package christmas.model.order;
 
 import christmas.exception.business.InvalidOrderException;
 import christmas.model.Order;

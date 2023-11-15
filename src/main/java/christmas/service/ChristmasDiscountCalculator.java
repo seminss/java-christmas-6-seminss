@@ -26,9 +26,9 @@ public class ChristmasDiscountCalculator {
 
     public DiscountedItems calculateDiscounts(VisitDate visitDate, Order order) {
         List<DiscountAmount> discounts = new ArrayList<>();
-        discounts.add(discountGiveaway(order));
         discounts.add(discountDDay(visitDate));
         discounts.add(discountSpecialDay(visitDate));
+        discounts.add(discountGiveaway(order));
         if (isWeekday(visitDate)) {
             discounts.add(discountWeekDay(visitDate, order));
             return new DiscountedItems(discounts);

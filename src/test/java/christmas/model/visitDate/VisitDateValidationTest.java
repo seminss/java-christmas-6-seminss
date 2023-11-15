@@ -1,4 +1,4 @@
-package christmas.model.validate;
+package christmas.model.visitDate;
 
 import christmas.model.VisitDate;
 import org.junit.jupiter.api.Assertions;

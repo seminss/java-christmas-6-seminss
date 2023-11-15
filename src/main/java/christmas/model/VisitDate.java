@@ -16,7 +16,7 @@ public final class VisitDate {
     }
 
     private void validateRange(int date) {
-        if (date < 1 || date > 31) { //TODO: LocalDate로 바꾸기
+        if (date < 1 || date > 31) { // TODO: DECEMBER 성질은 따로 묶을 수 있게 하기
             throw new InvalidDateException(INVALID_DATE.getMessage());
         }
     }
