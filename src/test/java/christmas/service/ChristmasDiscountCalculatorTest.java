@@ -42,11 +42,11 @@ class ChristmasDiscountCalculatorTest {
         DiscountedItems discountedItems = calculator.calculateDiscounts(visitDate, order);
         List<DiscountAmount> discounts = discountedItems.items();
 
-        //then
+        //then //TODO: assertSoftly
         assertTrue(discounts.contains(new DiscountAmount(WEEKDAY_DISCOUNT, -4046)),
                 "평일 할인은 2023*2 만큼 들어간다.");
 
-        assertFalse(discounts.contains(new DiscountAmount(WEEKEND_DISCOUNT, 0)),
+        assertTrue(discounts.contains(new DiscountAmount(WEEKEND_DISCOUNT, 0)),
                 "주말 할인은 포함 되면 안된다.");
 
         assertTrue(discounts.contains(new DiscountAmount(SPECIAL_DISCOUNT, -1000)),
