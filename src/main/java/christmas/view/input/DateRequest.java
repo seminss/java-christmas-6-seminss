@@ -14,8 +14,12 @@ public class DateRequest {
         visitDate = parseInteger(userInput);
     }
 
-    public static DateRequest valueOf(String userInput) {
+    public static DateRequest of(String userInput) {
         return new DateRequest(userInput);
+    }
+
+    public int getVisitDate() {
+        return visitDate;
     }
 
     private int parseInteger(String userInput) {

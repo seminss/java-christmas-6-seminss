@@ -103,7 +103,7 @@
   - [ ] 할인 정책별로 객체를 만든다. 
   - [ ] eventSchedular, discountPolicy의 책임을 분배한다.
 
-- [ ] 월, 일에 의존하는 여러 이벤트에 재사용 가능하도록 날짜 관리 객체 생성
+- [x] 월, 일에 의존하는 여러 이벤트에 재사용 가능하도록 날짜 관리 객체 생성
 
 - [ ] visiteDateSummary에서 `%d월 %d일` 만 넘기게 한다.
   - DTO가 view의 책임까지 가지고 있음.
@@ -126,7 +126,7 @@
 
 - [ ] early-return을 적용한다.
 
-- [ ] Optional을 함수의 반환값, 필드값으로 변환한다.
+- [x] ~~Optional을 함수의 반환값, 필드값으로 변환한다.~~ null을 반환하지 않고, NONE 필드 생성
   -  파라미터로 쓰는 것은 안티 패턴이다.
 
 - [ ] Assert Softly를 활용한다.(DiscountCalculator)

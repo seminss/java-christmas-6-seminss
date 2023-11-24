@@ -9,12 +9,12 @@ public class InputView {
 
     public static DateRequest readVisitDate() {
         String userInput = read();
-        return DateRequest.valueOf(userInput);
+        return DateRequest.of(userInput);
     }
 
     public static OrderRequest readOrder() {
         String userInput = read();
-        return OrderRequest.valueOf(userInput);
+        return OrderRequest.of(userInput);
     }
 
     public static void readClose() {

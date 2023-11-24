@@ -16,6 +16,6 @@ public class VisitDateSummary {
 
     private void initVisitDateDetails(VisitDate visitDate) {
         this.visitDateDetails = String.format(PREVIEW_MESSAGE,
-                visitDate.getDate().getMonthValue(), visitDate.getDate().getDayOfMonth());
+                visitDate.date().getMonthValue(), visitDate.date().getDayOfMonth());
     }
 }
