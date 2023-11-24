@@ -4,15 +4,15 @@ import christmas.model.vo.DiscountAmount;
 import christmas.model.DiscountedItems;
 import christmas.model.Order;
 import christmas.model.VisitDate;
+import christmas.view.input.DateRequest;
+import christmas.view.input.OrderRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.AbstractMap;
 import java.util.List;
 
 import static christmas.model.policy.discount.DiscountSettings.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -23,20 +23,15 @@ class ChristmasDiscountCalculatorTest {
 
     @BeforeEach
     public void SetUp() {
-        visitDate = new VisitDate(17);
+        visitDate = VisitDate.of(DateRequest.of("17"));
         calculator = new ChristmasDiscountCalculator();
     }
 
     @DisplayName("평일 이벤트와 주말 이벤트는 동시에 존재할 수 없다.")
     @Test
-    public void calculateDiscountsTest1() {
+     void calculateDiscountsTest1() {
         //given
-        Order order = new Order(
-                List.of(
-                        new AbstractMap.SimpleEntry<>("바비큐립", 1),
-                        new AbstractMap.SimpleEntry<>("해산물파스타", 5),
-                        new AbstractMap.SimpleEntry<>("초코케이크", 2),
-                        new AbstractMap.SimpleEntry<>("샴페인", 1)));
+        Order order = Order.of(OrderRequest.of("바비큐립-1,해산물파스타-5,초코케이크-2,샴페인-1"));
 
         //when
         DiscountedItems discountedItems = calculator.calculateDiscounts(visitDate, order);
@@ -62,11 +57,9 @@ class ChristmasDiscountCalculatorTest {
 
     @DisplayName("12만원을 넘지 않으면 증정 이벤트 금액은 0이다.")
     @Test
-    public void calculateDiscountsTest2() {
+     void calculateDiscountsTest2() {
         //given
-        Order order = new Order(
-                List.of(new AbstractMap.SimpleEntry<>("바비큐립", 1))
-        );
+        Order order = Order.of(OrderRequest.of("바비큐립-1"));
 
         //when
         DiscountedItems discountedItems = calculator.calculateDiscounts(visitDate, order);
