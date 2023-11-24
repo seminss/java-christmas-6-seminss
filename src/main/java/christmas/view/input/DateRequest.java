@@ -1,15 +1,25 @@
-package christmas.view.input.validator;
+package christmas.view.input;
 
 import christmas.exception.input.EmptyInputException;
 import christmas.exception.input.InvalidNumberException;
 
-import static christmas.exception.ValidationErrorMessage.*;
+import static christmas.exception.ValidationErrorMessage.INVALID_DATE;
 
-public class VisitDateValidator {
+public class DateRequest {
+    private final int visitDate;
 
-    public static void validate(String userInput) {
+    private DateRequest(String userInput){
+        visitDate = parseInteger(userInput);
+    }
+
+    public static DateRequest valueOf(String userInput){
         validateNotEmpty(userInput);
         validateFormat(userInput);
+        return new DateRequest(userInput);
+    }
+
+    private int parseInteger(String userInput) {
+        return Integer.parseInt(userInput);
     }
 
     private static void validateNotEmpty(String userInput) {
@@ -25,4 +35,5 @@ public class VisitDateValidator {
             throw new InvalidNumberException(INVALID_DATE.getMessage());
         }
     }
+
 }

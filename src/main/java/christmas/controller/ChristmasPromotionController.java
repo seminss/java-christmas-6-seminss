@@ -5,9 +5,6 @@ import christmas.view.input.InputView;
 import christmas.view.output.DetailsFormatter;
 import christmas.view.output.OutputView;
 
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
-
 public class ChristmasPromotionController {
     private final ChristmasPromotionService service;
 
@@ -16,25 +13,23 @@ public class ChristmasPromotionController {
     }
 
     public void start() {
-        takeVisitDate();
-        takeOrder();
-        previewEventBenefits();
+//        takeVisitDate();
+//        takeOrder();
+//        previewEventBenefits();
     }
 
     private void takeVisitDate() {
         run(() -> {
             OutputView.printIntroductionMessage();
             OutputView.printTakeDateMessage();
-            Integer visitDate = InputView.readVisitDate();
-            service.setVisitDate(visitDate);
+            InputView.readVisitDate();
         });
     }
 
     private void takeOrder() {
         run(() -> {
             OutputView.printTakeOrderMessage();
-            List<SimpleEntry<String, Integer>> order = InputView.readOrder();
-            service.setOrder(order);
+            InputView.readOrder();
         });
     }
 

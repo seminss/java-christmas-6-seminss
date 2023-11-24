@@ -93,9 +93,9 @@
 
 ## 🚀 리펙토링 사항
 
-- [ ] inputView에서 값을 넘길 때 DTO로 넘기게 한다.
-  - [ ] 내부에서 검증, 파싱을 진행한다.
-  - [ ] visitDate의 경우 Integer로 반환하던 값을 int로 변환
+- [x] inputView에서 값을 넘길 때 DTO로 넘기게 한다.
+  - [x] 내부에서 검증, 파싱을 진행한다.
+  - [x] visitDate의 경우 Integer로 반환하던 값을 int로 변환
     - Integer로 반환하면 null을 가질 수도 있다는 인상을 줌 + 성능 이슈
 
 - [ ] discountCalculator의 책임을 분리한다. 
@@ -117,8 +117,12 @@
 
 - [ ] Service단에서 상태값을 가지지 않게 한다. 
   - 싱글톤 고려!
+  
+- [ ] Christmas Promotion에 대한 Exception을 추상클래스를 만들어 상속받게 한다.
 
 - [ ] static 함수만 있는 유틸 클래스들은 생성자를 private으로 잠군다.
+
+- [ ] 하위 필드를 조회해야 하는 경우, 일반 클래스에 대해 정적 팩토리 메서드 패턴을 적용해본다.
 
 - [ ] early-return을 적용한다.
 
