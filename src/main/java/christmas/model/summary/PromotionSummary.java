@@ -1,12 +1,11 @@
 package christmas.model.summary;
 
-import christmas.config.Badge;
-import christmas.config.Giveaway;
+import christmas.model.constant.Badge;
+import christmas.model.constant.Giveaway;
 import christmas.model.vo.DiscountAmount;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static christmas.constant.EventSymbol.DATA_FORMAT;
@@ -35,7 +34,7 @@ public final class PromotionSummary {
     }
 
     public PromotionSummary(List<DiscountAmount> discounts, int totalDiscount, int finalPaymentAmount,
-                            Optional<Badge> eventBadge) {
+                            Badge eventBadge) {
         initDiscountDetails(discounts);
         initFinalPaymentAmountDetails(finalPaymentAmount);
         initTotalDiscountDetails(totalDiscount);
@@ -82,12 +81,12 @@ public final class PromotionSummary {
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private void initEventBadgeDetails(Optional<Badge> eventBadge) {
-        if (eventBadge.isEmpty()) {
+    private void initEventBadgeDetails(Badge eventBadge) {
+        if (eventBadge == Badge.NONE) {
             this.eventBadgeDetails = DEFAULT_MESSAGE;
             return;
         }
-        this.eventBadgeDetails = eventBadge.get().getName();
+        this.eventBadgeDetails = eventBadge.getName();
     }
 
     private void initTotalDiscountDetails(int totalDiscount) {

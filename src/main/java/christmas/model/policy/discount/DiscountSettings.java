@@ -1,6 +1,6 @@
 package christmas.model.policy.discount;
 
-import christmas.config.Giveaway;
+import christmas.model.constant.Giveaway;
 
 public enum DiscountSettings {
     DDAY_DISCOUNT("크리스마스 디데이 할인", 1000, 100),

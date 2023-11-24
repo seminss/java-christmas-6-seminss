@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.config.Badge;
+import christmas.model.constant.Badge;
 import christmas.model.vo.DiscountAmount;
 
 import static christmas.model.policy.discount.DiscountSettings.GIVEAWAY_DISCOUNT;

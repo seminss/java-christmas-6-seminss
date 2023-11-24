@@ -1,4 +1,4 @@
-package christmas.config;
+package christmas.model.constant;
 
 public enum Giveaway {
     CHAMPAGNE("샴페인", 25_000,1);

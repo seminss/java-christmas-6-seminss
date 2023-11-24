@@ -1,6 +1,6 @@
-package christmas.config;
+package christmas.model.constant;
 
-import static christmas.config.Menu.Category.*;
+import static christmas.model.constant.Menu.Category.*;
 
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", 6_000, APPETIZER),
