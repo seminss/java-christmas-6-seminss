@@ -1,9 +1,14 @@
 package christmas.controller;
 
+import christmas.model.summary.PromotionSummary;
 import christmas.service.ChristmasPromotionService;
+import christmas.view.input.DateRequest;
 import christmas.view.input.InputView;
+import christmas.view.input.OrderRequest;
 import christmas.view.output.DetailsFormatter;
 import christmas.view.output.OutputView;
+
+import java.util.function.Supplier;
 
 public class ChristmasPromotionController {
     private final ChristmasPromotionService service;
@@ -13,50 +18,33 @@ public class ChristmasPromotionController {
     }
 
     public void start() {
-//        takeVisitDate();
-//        takeOrder();
-//        previewEventBenefits();
-    }
-
-    private void takeVisitDate() {
-        run(() -> {
-            OutputView.printIntroductionMessage();
-            OutputView.printTakeDateMessage();
-            InputView.readVisitDate();
-        });
-    }
-
-    private void takeOrder() {
-        run(() -> {
-            OutputView.printTakeOrderMessage();
-            InputView.readOrder();
-        });
-    }
-
-    private void previewEventBenefits() {
-        OutputView.printMessage(formatVisitDate());
-        OutputView.printMessage(formatOrder());
-        OutputView.printMessage(formatDiscountResult());
+        final DateRequest dateRequest = takeVisitDate();
+        final OrderRequest orderRequest = takeOrder();
+        showPreviewMessage(service.getPromotionSummary(dateRequest, orderRequest));
         InputView.readClose();
     }
 
-    private DetailsFormatter formatVisitDate() {
-        return DetailsFormatter.visitDateFormatter(service.getVisitDateSummary());
+    private DateRequest takeVisitDate() {
+        OutputView.printIntroductionMessage();
+        OutputView.printTakeDateMessage();
+        return getValidRequest(InputView::readVisitDate);
     }
 
-    private DetailsFormatter formatOrder() {
-        return DetailsFormatter.OrderFormatter(service.getOrderSummary());
+    private OrderRequest takeOrder() {
+        OutputView.printTakeOrderMessage();
+        return getValidRequest(InputView::readOrder);
     }
 
-    private DetailsFormatter formatDiscountResult() {
-        return DetailsFormatter.DiscountResultFormatter(service.getPromotionSummary());
+    private void showPreviewMessage(PromotionSummary promotionSummary) {
+//        OutputView.printMessage(DetailsFormatter.visitDateFormatter(service.getVisitDateSummary(dateRequest)));
+//        OutputView.printMessage(DetailsFormatter.OrderFormatter(service.getOrderSummary(orderRequest)));
+        OutputView.printMessage(DetailsFormatter.DiscountResultFormatter(promotionSummary));
     }
 
-    private void run(Runnable inputRunnable) {
+    private static <T> T getValidRequest(Supplier<T> inputSupplier) {
         while (true) {
             try {
-                inputRunnable.run();
-                break;
+                return inputSupplier.get();
             } catch (IllegalArgumentException e) {
                 OutputView.printMessage(e.getMessage());
             }

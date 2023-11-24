@@ -8,13 +8,13 @@ import static christmas.exception.ValidationErrorMessage.INVALID_DATE;
 public class DateRequest {
     private final int visitDate;
 
-    private DateRequest(String userInput){
+    private DateRequest(String userInput) {
+        validateNotEmpty(userInput);
+        validateFormat(userInput);
         visitDate = parseInteger(userInput);
     }
 
-    public static DateRequest valueOf(String userInput){
-        validateNotEmpty(userInput);
-        validateFormat(userInput);
+    public static DateRequest valueOf(String userInput) {
         return new DateRequest(userInput);
     }
 
@@ -22,13 +22,13 @@ public class DateRequest {
         return Integer.parseInt(userInput);
     }
 
-    private static void validateNotEmpty(String userInput) {
+    private void validateNotEmpty(String userInput) {
         if (userInput.isEmpty()) {
             throw new EmptyInputException(INVALID_DATE.getMessage());
         }
     }
 
-    private static void validateFormat(String userInput) {
+    private void validateFormat(String userInput) {
         try {
             Integer.parseInt(userInput);
         } catch (NumberFormatException e) {

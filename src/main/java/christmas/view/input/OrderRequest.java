@@ -15,12 +15,12 @@ public class OrderRequest {
     private final List<QuantityPerMenu> orderRequest;
 
     private OrderRequest(String userInput) {
+        validateNotEmpty(userInput);
+        validateFormat(userInput);
         this.orderRequest = parseEachMenu(userInput);
     }
 
-    public static OrderRequest valueOf(String userInput){
-        validateNotEmpty(userInput);
-        validateFormat(userInput);
+    public static OrderRequest valueOf(String userInput) {
         return new OrderRequest(userInput);
     }
 
@@ -33,13 +33,13 @@ public class OrderRequest {
                 .toList();
     }
 
-    private static void validateNotEmpty(String userInput) {
+    private void validateNotEmpty(String userInput) {
         if (userInput.isEmpty()) {
             throw new EmptyInputException(INVALID_ORDER.getMessage());
         }
     }
 
-    private static void validateFormat(String userInput) {
+    private void validateFormat(String userInput) {
         String separator = MENU_SEPARATOR.getValue();
         String connector = MENU_CONNECTOR.getValue();
         String regex = "^[가-힣]+" + connector + "\\d+(" + separator + "[가-힣]+" + connector + "\\d)*$";
