@@ -91,6 +91,46 @@
 
 ---
 
+## 🚀 리펙토링 사항
+
+- [ ] inputView에서 값을 넘길 때 DTO로 넘기게 한다.
+  - [ ] 내부에서 검증, 파싱을 진행한다.
+  - [ ] visitDate의 경우 Integer로 반환하던 값을 int로 변환
+    - Integer로 반환하면 null을 가질 수도 있다는 인상을 줌 + 성능 이슈
+
+- [ ] discountCalculator의 책임을 분리한다. 
+  - 기존 코드는 SRP, OCP 위반
+  - [ ] 할인 정책별로 객체를 만든다. 
+  - [ ] eventSchedular, discountPolicy의 책임을 분배한다.
+
+- [ ] 월, 일에 의존하는 여러 이벤트에 재사용 가능하도록 날짜 관리 객체 생성
+
+- [ ] visiteDateSummary에서 `%d월 %d일` 만 넘기게 한다.
+  - DTO가 view의 책임까지 가지고 있음.
+
+- [ ] 객체가 스스로 할 수 있는 일을 외부에서 처리하고 있는지 확인한다.
+
+- [ ] 생성자 주입을 적용한다.
+  - 유연하고 확장 가능한 코드.
+
+- [ ] setter 삭제, 생성자 주입. (PromotionSummary)
+
+- [ ] Service단에서 상태값을 가지지 않게 한다. 
+  - 싱글톤 고려!
+
+- [ ] static 함수만 있는 유틸 클래스들은 생성자를 private으로 잠군다.
+
+- [ ] early-return을 적용한다.
+
+- [ ] Optional을 함수의 반환값, 필드값으로 변환한다.
+  -  파라미터로 쓰는 것은 안티 패턴이다.
+
+- [ ] Assert Softly를 활용한다.(DiscountCalculator)
+  - 테스트 코드를 작성할 때 여러 Assert문이 있으면 위에 테스트가 실패했을 때 아래 테스트는 작동하지 않는다
+
+
+---
+
 ## 🔮 입력 예외
 
 <U>모든 에러 메시지는 "[ERROR]"로 시작한다.</U>
