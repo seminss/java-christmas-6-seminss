@@ -1,11 +1,11 @@
 package christmas.controller;
 
-import christmas.model.summary.PromotionSummary;
+import christmas.dto.response.PromotionResponse;
 import christmas.service.ChristmasPromotionService;
-import christmas.view.input.DateRequest;
+import christmas.dto.request.DateRequest;
 import christmas.view.input.InputView;
-import christmas.view.input.OrderRequest;
-import christmas.view.output.DetailsFormatter;
+import christmas.dto.request.OrderRequest;
+import christmas.view.output.OutputPrompt;
 import christmas.view.output.OutputView;
 
 import java.util.function.Supplier;
@@ -35,10 +35,8 @@ public class ChristmasPromotionController {
         return getValidRequest(InputView::readOrder);
     }
 
-    private void showPreviewMessage(PromotionSummary promotionSummary) {
-//        OutputView.printMessage(DetailsFormatter.visitDateFormatter(service.getVisitDateSummary(dateRequest)));
-//        OutputView.printMessage(DetailsFormatter.OrderFormatter(service.getOrderSummary(orderRequest)));
-        OutputView.printMessage(DetailsFormatter.DiscountResultFormatter(promotionSummary));
+    private void showPreviewMessage(PromotionResponse promotionResponse) {
+        OutputView.printMessage(OutputPrompt.of(promotionResponse));
     }
 
     private static <T> T getValidRequest(Supplier<T> inputSupplier) {

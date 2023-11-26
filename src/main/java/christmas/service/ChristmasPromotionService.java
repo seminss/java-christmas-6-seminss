@@ -1,23 +1,31 @@
 package christmas.service;
 
-import christmas.model.*;
-import christmas.model.summary.PromotionSummary;
-import christmas.view.input.DateRequest;
-import christmas.view.input.OrderRequest;
+import christmas.model.Order;
+import christmas.model.TotalPromotionOutcome;
+import christmas.model.VisitDate;
+import christmas.model.policy.discount.DdayDiscount;
+import christmas.model.policy.discount.SpecialDiscount;
+import christmas.model.policy.discount.WeekdayDiscount;
+import christmas.model.policy.discount.WeekendDiscount;
+import christmas.model.policy.event.GiveawayEvent;
+import christmas.dto.response.PromotionResponse;
+import christmas.dto.request.DateRequest;
+import christmas.dto.request.OrderRequest;
+import christmas.service.util.BenefitCalculator;
+import christmas.service.util.ResponseBuilder;
+
+import java.util.List;
 
 public class ChristmasPromotionService {
-    ChristmasDiscountCalculator discountCalculator = new ChristmasDiscountCalculator();
+    BenefitCalculator benefitCalculator = new BenefitCalculator(
+            List.of(new DdayDiscount(), new SpecialDiscount(), new WeekdayDiscount(), new WeekendDiscount()),
+            List.of(new GiveawayEvent())
+    );
 
-    public PromotionSummary getPromotionSummary(DateRequest dateRequest, OrderRequest orderRequest) {
+    public PromotionResponse getPromotionSummary(DateRequest dateRequest, OrderRequest orderRequest) {
         Order order = Order.of(orderRequest);
         VisitDate visitDate = VisitDate.of(dateRequest);
-        if (order.canReceivePromotion()) {
-            DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
-            DiscountResults discountResults = new DiscountResults(order.getBaseOrderAmount(), discountedItems);
-            return new PromotionSummary(discountedItems.items(), discountResults.getTotalDiscountAmount(),
-                    discountResults.getFinalPaymentAmount(), discountResults.getBadge());
-        }
-        return new PromotionSummary(order.getBaseOrderAmount());
+        TotalPromotionOutcome promotionOutcome = benefitCalculator.calculate(visitDate, order);
+        return ResponseBuilder.build(order, visitDate, promotionOutcome);
     }
-
 }
