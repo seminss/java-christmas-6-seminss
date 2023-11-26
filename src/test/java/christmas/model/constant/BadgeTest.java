@@ -1,6 +1,5 @@
-package christmas.config;
+package christmas.model.constant;
 
-import christmas.model.constant.Badge;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

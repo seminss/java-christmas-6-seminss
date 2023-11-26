@@ -1,7 +1,6 @@
-package christmas.model.visitDate;
+package christmas.model;
 
-import christmas.model.VisitDate;
-import christmas.view.input.DateRequest;
+import christmas.dto.request.DateRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

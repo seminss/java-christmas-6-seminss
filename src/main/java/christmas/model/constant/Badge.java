@@ -1,9 +1,9 @@
 package christmas.model.constant;
 
 public enum Badge {
-    SANTA("산타", -20_000),
-    TREE("트리", -10_000),
-    STAR("별", -5_000),
+    SANTA("산타", 20_000),
+    TREE("트리", 10_000),
+    STAR("별", 5_000),
     NONE("없음", 0);
 
     private final String name;
@@ -19,13 +19,14 @@ public enum Badge {
     }
 
     public static Badge of(int totalDiscountAmount) {
-        if (SANTA.threshold >= totalDiscountAmount) {
+        totalDiscountAmount = Math.negateExact(totalDiscountAmount);
+        if (SANTA.threshold <= totalDiscountAmount) {
             return SANTA;
         }
-        if (TREE.threshold >= totalDiscountAmount) {
+        if (TREE.threshold <= totalDiscountAmount) {
             return TREE;
         }
-        if (STAR.threshold >= totalDiscountAmount) {
+        if (STAR.threshold <= totalDiscountAmount) {
             return STAR;
         }
         return NONE;

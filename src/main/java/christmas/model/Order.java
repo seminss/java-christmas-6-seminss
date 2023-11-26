@@ -2,20 +2,22 @@ package christmas.model;
 
 import christmas.exception.business.InvalidOrderException;
 import christmas.model.constant.Menu;
-import christmas.view.input.OrderRequest;
-import christmas.view.input.OrderItem;
+import christmas.model.policy.Promotion;
+import christmas.dto.request.OrderRequest;
 
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 
-import static christmas.constant.EventThreshold.*;
 import static christmas.exception.ValidationErrorMessage.*;
 
 public class Order {
+    private static final int MINIMUM_ORDER_QUANTITY=1;
+    private static final int MAXIMUM_ORDER_QUANTITY=20;
     private final EnumMap<Menu, Integer> orderedMenu;
 
+    //TODO: 생성자 선언으로 바꿀지 고민
     private Order(EnumMap<Menu, Integer> orderedMenu) {
         this.orderedMenu = orderedMenu;
     }
@@ -29,9 +31,6 @@ public class Order {
         return orderedMenu;
     }
 
-    public boolean canReceivePromotion() {
-        return getBaseOrderAmount() > PROMOTION_THRESHOLD.getValue();
-    }
 
     public int getMainQuantity() {
         return getQuantityByCategory(Menu.Category.MAIN);
@@ -51,10 +50,14 @@ public class Order {
                 .sum();
     }
 
+    public boolean canReceivePromotion() {
+        return getBaseOrderAmount()>= Promotion.PROMOTION_THRESHOLD;
+    }
+
     private static EnumMap<Menu, Integer> processOrderItems(OrderRequest orderRequest) {
         EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
         EnumSet<Menu.Category> categories = EnumSet.noneOf(Menu.Category.class);
-        for (OrderItem orderItem : orderRequest.getOrderItems()) {
+        for (OrderRequest.OrderItem orderItem : orderRequest.getOrderItems()) {
             Menu menu = Menu.of(orderItem.getMenuName());
             Integer quantity = orderItem.getQuantity();
             validateMenuExistence(menu);
@@ -81,7 +84,7 @@ public class Order {
     }
 
     private static void validateSingleQuantity(Integer quantity) {
-        if (quantity < MINIMUM_ORDER_QUANTITY.getValue()) {
+        if (quantity < MINIMUM_ORDER_QUANTITY) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
@@ -90,7 +93,7 @@ public class Order {
         int totalQuantity = values.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
-        if (totalQuantity > MAXIMUM_ORDER_QUANTITY.getValue()) {
+        if (totalQuantity > MAXIMUM_ORDER_QUANTITY) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }

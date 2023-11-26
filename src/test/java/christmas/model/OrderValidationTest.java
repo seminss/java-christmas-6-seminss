@@ -1,8 +1,7 @@
-package christmas.model.order;
+package christmas.model;
 
 import christmas.exception.business.InvalidOrderException;
-import christmas.model.Order;
-import christmas.view.input.OrderRequest;
+import christmas.dto.request.OrderRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

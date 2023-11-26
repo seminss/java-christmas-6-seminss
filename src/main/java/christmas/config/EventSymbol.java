@@ -1,4 +1,4 @@
-package christmas.constant;
+package christmas.config;
 
 public enum EventSymbol {
     MENU_SEPARATOR(","),

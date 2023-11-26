@@ -1,8 +1,7 @@
-package christmas.model.order;
+package christmas.model;
 
 import christmas.model.constant.Menu;
-import christmas.model.Order;
-import christmas.view.input.OrderRequest;
+import christmas.dto.request.OrderRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
