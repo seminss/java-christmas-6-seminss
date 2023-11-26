@@ -1,4 +1,4 @@
-package christmas.view.input;
+package christmas.dto.request;
 
 import christmas.exception.input.EmptyInputException;
 import christmas.exception.input.InvalidOrderException;
@@ -6,8 +6,8 @@ import christmas.exception.input.InvalidOrderException;
 import java.util.Arrays;
 import java.util.List;
 
-import static christmas.constant.EventSymbol.MENU_CONNECTOR;
-import static christmas.constant.EventSymbol.MENU_SEPARATOR;
+import static christmas.config.EventSymbol.MENU_CONNECTOR;
+import static christmas.config.EventSymbol.MENU_SEPARATOR;
 import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
 
 public class OrderRequest {
@@ -31,7 +31,7 @@ public class OrderRequest {
         return Arrays.stream(userInput.split(MENU_SEPARATOR.getValue()))
                 .map(item -> {
                     String[] parts = item.trim().split(MENU_CONNECTOR.getValue());
-                    return OrderItem.of(parts[0], Integer.parseInt(parts[1]));
+                    return new OrderItem(parts[0], Integer.parseInt(parts[1]));
                 })
                 .toList();
     }
@@ -45,9 +45,28 @@ public class OrderRequest {
     private void validateFormat(String userInput) {
         String separator = MENU_SEPARATOR.getValue();
         String connector = MENU_CONNECTOR.getValue();
-        String regex = "^[가-힣]+"+ connector +"\\d+("+ separator +"[가-힣]+"+ connector +"\\d+)*$";
+        String regex = "^[가-힣]+" + connector + "\\d+(" + separator + "[가-힣]+" + connector + "\\d+)*$";
         if (!userInput.matches(regex)) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
+
+    public static class OrderItem {
+        private final String menuName;
+        private final int quantity;
+
+        private OrderItem(String menuName, int quantity) {
+            this.menuName = menuName;
+            this.quantity = quantity;
+        }
+
+        public String getMenuName() {
+            return menuName;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+    }
+
 }

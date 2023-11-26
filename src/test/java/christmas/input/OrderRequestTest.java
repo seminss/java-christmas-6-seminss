@@ -1,6 +1,6 @@
 package christmas.input;
 
-import christmas.view.input.OrderRequest;
+import christmas.dto.request.OrderRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

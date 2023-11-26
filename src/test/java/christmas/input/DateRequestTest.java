@@ -1,6 +1,6 @@
 package christmas.input;
 
-import christmas.view.input.DateRequest;
+import christmas.dto.request.DateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;

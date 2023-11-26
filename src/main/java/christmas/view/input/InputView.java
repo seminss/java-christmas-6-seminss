@@ -1,6 +1,8 @@
 package christmas.view.input;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.dto.request.DateRequest;
+import christmas.dto.request.OrderRequest;
 
 public class InputView {
 

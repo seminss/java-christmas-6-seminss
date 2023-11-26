@@ -1,4 +1,4 @@
-package christmas.view.input;
+package christmas.dto.request;
 
 import christmas.exception.input.EmptyInputException;
 import christmas.exception.input.InvalidNumberException;
