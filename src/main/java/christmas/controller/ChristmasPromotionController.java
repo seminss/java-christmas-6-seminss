@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 public class ChristmasPromotionController {
     private final ChristmasPromotionService service;
 
-    public ChristmasPromotionController() {
-        service = new ChristmasPromotionService();
+    public ChristmasPromotionController(ChristmasPromotionService service) {
+        this.service = service;
     }
 
     public void start() {
