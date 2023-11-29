@@ -15,9 +15,9 @@ public class Application {
     public static void main(String[] args) {
         ChristmasPromotionController christmasPromotionController = new ChristmasPromotionController(
                 new ChristmasPromotionService(new BenefitCalculator(
-                        List.of(new DdayDiscount(), new SpecialDiscount(), new WeekdayDiscount(), new WeekendDiscount()),
+                        List.of(new DdayDiscount(), new WeekdayDiscount(), new WeekendDiscount(), new SpecialDiscount()),
                         List.of(new GiveawayEvent()))
-        ));
+                ));
         christmasPromotionController.start();
     }
 }

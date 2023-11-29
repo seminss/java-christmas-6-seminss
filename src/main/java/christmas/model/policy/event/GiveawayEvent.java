@@ -12,13 +12,8 @@ public class GiveawayEvent extends Event {
     }
 
     @Override
-    public String getName() {
-        return CHAMPAGNE_GIVEAWAY.getMenu().getName();
-    }
-
-    @Override
     int calculateDiscountAmount(Order order, VisitDate visitDate) {
-        return Math.negateExact(CHAMPAGNE_GIVEAWAY.getThreshold());
+        return Math.negateExact(CHAMPAGNE_GIVEAWAY.getMenu().getPrice());
     }
 
     @Override
