@@ -1,26 +1,22 @@
 package christmas.view.input;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.view.input.parser.VisitDateParser;
-import christmas.view.input.parser.OrderParser;
-import christmas.view.input.validator.OrderMenuValidator;
-import christmas.view.input.validator.VisitDateValidator;
-
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
+import christmas.dto.request.DateRequest;
+import christmas.dto.request.OrderRequest;
 
 public class InputView {
 
-    public static Integer readVisitDate() {
-        String userInput = read();
-        VisitDateValidator.validate(userInput);
-        return VisitDateParser.parseInteger(userInput);
+    private InputView() {
     }
 
-    public static List<SimpleEntry<String, Integer>> readOrder() {
+    public static DateRequest readVisitDate() {
         String userInput = read();
-        OrderMenuValidator.validate(userInput);
-        return OrderParser.parseEachMenu(userInput);
+        return DateRequest.of(userInput);
+    }
+
+    public static OrderRequest readOrder() {
+        String userInput = read();
+        return OrderRequest.of(userInput);
     }
 
     public static void readClose() {

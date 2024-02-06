@@ -1,104 +1,114 @@
 package christmas.model;
 
 import christmas.exception.business.InvalidOrderException;
-import christmas.config.Menu;
+import christmas.model.constant.Menu;
+import christmas.model.policy.Promotion;
+import christmas.dto.request.OrderRequest;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.Map;
 
-import static christmas.exception.ValidationErrorMessage.CAN_NOT_DRINK_ONLY;
-import static christmas.exception.ValidationErrorMessage.INVALID_ORDER;
+import static christmas.exception.ValidationErrorMessage.*;
 
 public class Order {
+    private static final int MINIMUM_ORDER_QUANTITY=1;
+    private static final int MAXIMUM_ORDER_QUANTITY=20;
     private final EnumMap<Menu, Integer> orderedMenu;
 
-    public Order(List<SimpleEntry<String, Integer>> readOrder) {
-        validateDrinksOnly(readOrder);
-        orderedMenu = new EnumMap<>(Menu.class);
-        for (SimpleEntry<String, Integer> entry : readOrder) {
-            Menu menu = Menu.of(entry.getKey());
-            Integer quantity = entry.getValue();
-            validateMenuExistence(menu);
-            validateMenuDuplication(menu);
-            validateSingleQuantity(quantity);
-            orderedMenu.put(menu, quantity);
-        }
-        validateTotalQuantity(orderedMenu.values());
+    //TODO: 생성자 선언으로 바꿀지 고민
+    private Order(EnumMap<Menu, Integer> orderedMenu) {
+        this.orderedMenu = orderedMenu;
     }
 
-    public EnumMap<Menu, Integer> getOrderedMenu() {
+    public static Order of(OrderRequest orderRequest) {
+        EnumMap<Menu, Integer> orderedMenu = processOrderItems(orderRequest);
+        return new Order(orderedMenu);
+    }
+
+    public Map<Menu, Integer> getOrderedMenu() {
         return orderedMenu;
     }
 
+
     public int getMainQuantity() {
-        int mainQuantity = 0;
-        for (Menu menu : orderedMenu.keySet()) {
-            if (menu.getCategory() == Menu.Category.MAIN) {
-                mainQuantity += orderedMenu.get(menu);
-            }
-        }
-        return mainQuantity;
+        return getQuantityByCategory(Menu.Category.MAIN);
     }
 
     public int getDessertQuantity() {
-        int dessertQuantity = 0;
-        for (Menu menu : orderedMenu.keySet()) {
-            if (menu.getCategory() == Menu.Category.DESSERT) {
-                dessertQuantity += orderedMenu.get(menu);
-            }
-        }
-        return dessertQuantity;
+        return getQuantityByCategory(Menu.Category.DESSERT);
     }
 
     public int getBaseOrderAmount() {
-        int amount = 0;
-        for (Menu menu : Menu.values()) {
-            int quantity = orderedMenu.getOrDefault(menu, 0);
-            amount += quantity * menu.getPrice();
-        }
-        return amount;
+        return orderedMenu.keySet().stream()
+                .mapToInt(menu -> {
+                    int price = menu.getPrice();
+                    int quantity = orderedMenu.getOrDefault(menu, 0);
+                    return price * quantity;
+                })
+                .sum();
     }
 
+    public boolean canReceivePromotion() {
+        return getBaseOrderAmount()>= Promotion.PROMOTION_THRESHOLD;
+    }
 
-    private void validateDrinksOnly(List<SimpleEntry<String, Integer>> readOrder) {
+    private static EnumMap<Menu, Integer> processOrderItems(OrderRequest orderRequest) {
+        EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
         EnumSet<Menu.Category> categories = EnumSet.noneOf(Menu.Category.class);
-        for (SimpleEntry<String, Integer> entry : readOrder) {
-            Menu menu = Menu.of(entry.getKey());
+        for (OrderRequest.OrderItem orderItem : orderRequest.getOrderItems()) {
+            Menu menu = Menu.of(orderItem.getMenuName());
+            Integer quantity = orderItem.getQuantity();
+            validateMenuExistence(menu);
+            validateMenuDuplication(orderedMenu, menu);
+            validateSingleQuantity(quantity);
             categories.add(menu.getCategory());
+            orderedMenu.put(menu, quantity);
         }
+        validateDrinksOnly(categories);
+        validateTotalQuantity(orderedMenu.values());
+        return orderedMenu;
+    }
+
+    private static void validateDrinksOnly(EnumSet<Menu.Category> categories) {
         if (categories.size() == 1 && categories.contains(Menu.Category.DRINK)) {
             throw new InvalidOrderException(CAN_NOT_DRINK_ONLY.getMessage());
         }
     }
 
-
-    private void validateMenuExistence(Menu menu) {
+    private static void validateMenuExistence(Menu menu) {
         if (menu == Menu.NONE) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
 
-    private void validateSingleQuantity(Integer quantity) {
-        if (quantity < 1) {
+    private static void validateSingleQuantity(Integer quantity) {
+        if (quantity < MINIMUM_ORDER_QUANTITY) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
 
-    private void validateTotalQuantity(Collection<Integer> values) {
+    private static void validateTotalQuantity(Collection<Integer> values) {
         int totalQuantity = values.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
-        if (totalQuantity > 20) {
+        if (totalQuantity > MAXIMUM_ORDER_QUANTITY) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
 
-    private void validateMenuDuplication(Menu menu) {
+    private static void validateMenuDuplication(EnumMap<Menu, Integer> orderedMenu, Menu menu) {
         if (orderedMenu.containsKey(menu)) {
             throw new InvalidOrderException(INVALID_ORDER.getMessage());
         }
     }
+
+    private int getQuantityByCategory(Menu.Category category) {
+        return orderedMenu.keySet().stream()
+                .filter(menu -> menu.getCategory() == category)
+                .mapToInt(orderedMenu::get)
+                .sum();
+    }
+
 }

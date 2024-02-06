@@ -1,50 +1,25 @@
 package christmas.service;
 
-import christmas.model.*;
-import christmas.model.summary.OrderSummary;
-import christmas.model.summary.PromotionSummary;
-import christmas.model.summary.VisitDateSummary;
-
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
-import java.util.Optional;
-
-import static christmas.constant.EventThreshold.PROMOTION_THRESHOLD;
+import christmas.model.Order;
+import christmas.model.TotalPromotionOutcome;
+import christmas.model.VisitDate;
+import christmas.dto.response.PromotionResponse;
+import christmas.dto.request.DateRequest;
+import christmas.dto.request.OrderRequest;
+import christmas.service.util.BenefitCalculator;
+import christmas.service.util.ResponseBuilder;
 
 public class ChristmasPromotionService {
+    BenefitCalculator benefitCalculator;
 
-    Order order;
-    VisitDate visitDate;
-    ChristmasDiscountCalculator discountCalculator = new ChristmasDiscountCalculator();
-
-    public void setVisitDate(Integer readVisitDate) {
-        visitDate = new VisitDate(readVisitDate);
+    public ChristmasPromotionService(BenefitCalculator benefitCalculator) {
+        this.benefitCalculator = benefitCalculator;
     }
 
-    public void setOrder(List<SimpleEntry<String, Integer>> readOrder) {
-        order = new Order(readOrder);
+    public PromotionResponse getPromotionSummary(DateRequest dateRequest, OrderRequest orderRequest) {
+        Order order = Order.of(orderRequest);
+        VisitDate visitDate = VisitDate.of(dateRequest);
+        TotalPromotionOutcome promotionOutcome = benefitCalculator.calculate(visitDate, order);
+        return ResponseBuilder.build(order, visitDate, promotionOutcome);
     }
-
-    public OrderSummary getOrderSummary() {
-        return new OrderSummary(order);
-    }
-
-    public VisitDateSummary getVisitDateSummary() {
-        return new VisitDateSummary(visitDate);
-    }
-
-    public PromotionSummary getPromotionSummary() {
-        if (canReceivePromotion()) {
-            DiscountedItems discountedItems = discountCalculator.calculateDiscounts(visitDate, order);
-            DiscountResults discountResults = new DiscountResults(order.getBaseOrderAmount(), discountedItems);
-            return new PromotionSummary(discountedItems.items(), discountResults.getTotalDiscountAmount(),
-                    discountResults.getFinalPaymentAmount(), Optional.ofNullable(discountResults.getBadge()));
-        }
-        return new PromotionSummary(order.getBaseOrderAmount());
-    }
-
-    private boolean canReceivePromotion() {
-        return order.getBaseOrderAmount() > PROMOTION_THRESHOLD.getAmount();
-    }
-
 }
